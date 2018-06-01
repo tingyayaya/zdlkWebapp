@@ -1,0 +1,103 @@
+/* ========
+    默认样式
+   ======== */
+   body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+   a{text-decoration:none;-webkit-tap-highlight-color:transparent;}
+   a:hover{text-decoration:none !important}
+   a:visited{text-decoration:none !important;color: inherit}
+   a:link{text-decoration:none !important; color: inherit}
+   a:active{text-decoration:none !important}
+   em,i{font-style:normal}
+   li{list-style:none}
+   img{border:0;vertical-align:middle}
+   table{border-collapse:collapse;border-spacing:0}
+   p{word-wrap:break-word}  /*允许换行*/
+   input[type="button"]{
+       -webkit-appearance: none;
+   }
+   *{
+       -webkit-tap-highlight-color: transparent;
+    }
+   input, button, select, textarea {
+       outline: none;
+       -webkit-appearance: none;
+       border-radius: 0;
+       border: none;
+   }
+   input[type=radio]{
+       -webkit-appearance: radio;
+   }
+   /*去除箭头*/
+   input[type=number] {  
+       -moz-appearance:textfield;  
+   }  
+   input[type=number]::-webkit-inner-spin-button,  
+   input[type=number]::-webkit-outer-spin-button {  
+       -webkit-appearance: none;  
+       margin: 0;  
+   }  
+   
+   /* ========
+       工具样式
+      ======== */
+   
+   .center-block{
+       display:block;
+       margin-right:auto;
+       margin-left:auto;
+   }
+   .pull-right {
+       float:right !important;
+   }
+   .pull-left {
+       float:left !important;
+   }
+   .text-right {
+       text-align:right !important;
+   }
+   .text-left{
+       text-align:left !important;
+   }
+   .text-center{
+       text-align:center !important;
+   }
+   
+   .hide {
+       display:none !important;
+   }
+   .show {
+       display: block !important;
+   }
+   .invisible {
+       visibility: hidden;
+   }
+   .text-hide {
+       font: 0/0 a;
+       color: transparent;
+       text-shadow:none;
+       background-color:transparent;
+       border:0;
+   }
+   
+   .clearfix:before,
+   .clearfix:after {
+       content: "";
+       display: table;
+       clear: both;
+   }
+   .clearfix:after {
+       clear: both;
+   }
+   .toCursor{
+       cursor: pointer;
+   }
+   .isfooter{
+      margin-bottom: 98px;
+      
+   }
+   .isheader{
+      margin-top: 88px;
+   }
+   .isnav{
+       margin-top: 156px;
+   }
