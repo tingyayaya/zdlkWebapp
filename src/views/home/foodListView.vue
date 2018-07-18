@@ -1,0 +1,173 @@
+<template>
+    <div class="home-list-view">
+        <my-header title="饮食记录" :left="true"></my-header>
+        <div class="no-data" v-show="list.length==0"><i class="icon-z icon-z-nolist"></i><p>您还没有饮食记录</p></div>
+        <div class="bg-grey padding-t-b-20 myhome-list">
+            <ul>
+                <li v-for="item in list">
+                    <div class="card-h"><span>{{item.sortType}}</span><span>{{item.time}}</span></div>
+                    <div class="card-m">
+                        <p>{{item.content}}</p>
+                        <div class="img-list">
+                           <div class="img" v-for="urlddd in item.imgs" :style="{ backgroundImage: 'url('+urlddd+')'}"></div>
+                        </div>
+                    </div>
+                    <div class="card-b">
+                        营养师评价:{{item.evaluation=="" ? "暂无评价":item.evaluation}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <mt-button type="primary" class="fixed-btn-b" @click="handleRecord">记饮食</mt-button>
+    </div>
+</template>
+
+<script>
+import MyHeader from '@/components/MyHeader'
+
+export default {
+    data() {
+        return{
+            list: [     //全部记录
+                {
+                    sortType: '早餐',
+                    time: '2018-03-09 8:00',
+                    content: '我的丰盛早餐',
+                    value: '6.2mmol/L',
+                    imgs: ['http://img.hb.aicdn.com/df75487fbc3ad89bb0c42eee053c3fd2fdc6b18a12b99-qYfZrA_fw658'],
+                    evaluation: '我是评价么'
+                },
+                {
+                    sortType: '午餐',
+                    time: '2018-03-09 12:00',
+                    content: '今天午餐主食面条',
+                    value: '6.2mmol/L',
+                    imgs: [],
+                    evaluation: ''
+                },
+                {
+                    sortType: '晚餐',
+                    time: '2018-03-09 17：00',
+                    content: '我的晚餐',
+                    value: '6.2mmol/L',
+                    imgs: [],
+                    evaluation: ''
+                },
+                {
+                    sortType: '早餐',
+                    time: '2018-03-08 8：00',
+                    content: '',
+                    value: '6.2mmol/L',
+                   imgs: ['http://img.hb.aicdn.com/df75487fbc3ad89bb0c42eee053c3fd2fdc6b18a12b99-qYfZrA_fw658'],
+                    evaluation: ''
+                }
+            ]
+        }
+    },
+    methods:{
+        handleRecord(){
+            this.$router.push({name:'recordFoodView'})
+        }
+    },
+    components: { MyHeader }
+}
+</script>
+
+<style lang="scss" scoped>
+
+.bg-grey{
+    background-color:#f8f8f8;
+}
+.bg-padding-t{
+    padding-top:88px;
+}
+.bg-padding-b{
+    padding-bottom:68px;
+}
+.padding-t-b-20{
+   padding:108px 0 88px 0;
+}
+.padding-t-20{
+   padding-top: 108px;
+}
+$border1: 1px solid #dedede;
+
+.home-list-view{
+    height: 100%;
+    background: #f8f8f8;
+    
+    .no-data{
+       width: 100%;
+       text-align: center;
+       i{
+           margin-top: 300px;
+       }
+       p{
+           color: #4C4C4C;
+           font-size: 24px;
+           line-height: 50px;
+       }
+    }
+ 
+    ul{
+        li{
+            width: 100%;
+            background-color:#fff;
+            border-top: $border1;
+            border-bottom: $border1;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            box-sizing: border-box;
+            font-size: 28px;
+            .card-h, .card-b{
+                padding: 10px 0;
+            }
+            .card-h{
+                display: flex;
+                border-bottom: $border1;
+                span{
+                  flex: 1;
+                  font-size: 24px;
+                  color: #888888;
+                }
+                span:nth-child(2){
+                   text-align: right;
+                   padding-right: 20px;
+                }
+            }
+            .card-m{
+                border-bottom: $border1;
+                padding-top:10px;
+                .img-list{
+                    display: flex;
+                    flex-flow: row wrap;
+                    .img{
+                        width: 80px;
+                        height: 80px;
+                        border: $border1;
+                        background-size: cover;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        display: inline-block;
+                        margin:0 20px 20px 0;
+                    }
+                }
+                // padding:20px 0;
+                p{
+                    line-height: 50px;
+                    margin-bottom:10px;
+                }
+                
+            }
+        }
+    }
+    .more{
+        width: 86%;
+        display: flex;
+        justify-content: space-around;
+        margin: 0 auto;
+        padding: 20px 0;
+    }
+}
+</style>
+

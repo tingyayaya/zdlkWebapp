@@ -1,0 +1,95 @@
+/* 改变主题色变量 */
+$--color-primary: #C5D01A;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '../../../node_modules/element-ui/lib/theme-chalk/fonts';
+
+@import "../../../node_modules/element-ui/packages/theme-chalk/src/index";
+
+body{
+    font-size: 28px !important;
+}
+.el-button{
+    border-radius: 6px;
+    &.long{
+        width: 600px;
+        height: 78px;
+    }
+    &.medium{
+        width: 420px;
+        height: 68px;
+    }
+    &.is-round{
+        border-radius: 78px;
+    }
+}
+.el-header{
+    height: 88px !important;
+    background: #fff url(../imgs/header-bg.png) no-repeat;
+    background-size: 640px auto;
+    overflow: hidden;
+    width: 100%;
+}
+.el-header2{
+    height: 260px !important;
+    background: #fff url(../imgs/header-bg.png) no-repeat;
+    background-size: 640px auto;
+    overflow: hidden;
+    width: 100%;
+}
+.el-button--mini{
+    height: 50px !important;
+    width: 120px !important;
+}
+.el-button--medium{
+    height: 68px !important;
+    min-width: 300px !important;
+}
+
+.my-list-space{
+    ul{
+        width: 100%;
+        background: #fff;
+        padding-left: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid #dedede;
+        border-top: 1px solid #dedede;
+        box-sizing: border-box;
+        li+li{
+                border-top: 1px solid #dedede;
+            }
+        li{
+            line-height: 66px;
+            
+            a{
+               display: flex;
+               margin-right: 20px;
+            }
+            label{
+                flex:1;
+            }
+            span{
+                color: #888;
+                flex: 2;
+                text-align: right;
+            }
+        }
+    }
+}
+.bottom-btn{
+    position: absolute;
+    left: 50%;
+    bottom:-160px;
+    right: 50%;
+    transform: translate(-50%, 0);
+}
+.el-select{
+    width: 100%;
+    height: 68px;
+    .el-input{
+        height: 68px;
+        input{
+            height: 68px;
+        }
+    }
+}
