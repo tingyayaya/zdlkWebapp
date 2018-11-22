@@ -15,6 +15,7 @@ import { Toast } from 'mint-ui';
 export default {
     data() {
       return {
+          userInfoState: JSON.parse(localStorage.getItem('userInfoState')).userInfoState,
           title: '协议与说明',
           content: '',
           state: 0,
@@ -29,9 +30,9 @@ export default {
         var self = this;
         this.$axios({
           methods: 'post',
-          url: '/select_protocol.jsp',
+          url: self.baseurl.viewer+'/select_protocol.jsp',
           params: {
-            token: self.MYTOKEN
+            token: ''
           }
         })
         .then(function(res){
@@ -43,10 +44,10 @@ export default {
         var self = this;
         this.$axios({
           methods: 'post',
-          url: '/select_protocolstatue.jsp',
+          url: self.baseurl.viewer+'/select_protocolstatue.jsp',
           params: {
-            token: self.MYTOKEN,
-            'SKT123.SKF1934': sessionStorage.tel
+            token: '',
+            'SKT123.SKF1934': self.userInfoState.tel,
           }
         })
         .then(function(res){
@@ -64,10 +65,10 @@ export default {
             methods: 'post',
             url: '/insert_protocolconfirm.jsp',
             params: {
-              token: self.MYTOKEN,
-              'SKT123.SKF1934': sessionStorage.tel,
+              token: '',
+              'SKT123.SKF1934': localStorage.getItem('userInfoState').tel,
               // 'skt123.skf1935': '1',
-              'skt123.skf1940': sessionStorage.vipID,
+              'skt123.skf1940': localStorage.getItem('userInfoState').vipID,
               // 'skt123.skf1948': 1
             }
           })
@@ -87,19 +88,19 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .agreement-view{
     position: relative;
     height: 100%;
     box-sizing: border-box;
      h2{
-         font-size: 36px;
+         font-size: 0.36rem;
          font-weight: 400;
          text-align: center;
-         line-height: 120px;
+         line-height: 1.2rem;
      }
      p{
-         margin: 20px;
+         margin: 0.2rem;
          text-align: justify;
      }
      

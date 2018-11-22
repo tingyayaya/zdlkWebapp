@@ -42,14 +42,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .edit-info{
     height: 100%;
     background: #f8f8f8;
 }
 .unit{
     position: absolute;
-    line-height: 66px;
-    right: 20px;
+    line-height: 0.66rem;
+    right: 0.2rem;
 }
 </style>

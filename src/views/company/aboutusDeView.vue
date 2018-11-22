@@ -1,30 +1,95 @@
 <template>
     <div>
         <my-header :title="title" :left="flag"></my-header>
-        <div>
-           <detail-list :list="list"></detail-list>
+        <div class="my-acticle isheader">
+            <div v-if="list">
+                <div class="title">
+                    <p>{{list.title}}</p>
+                    <i class="icon iconfont icon-icon-time"></i>
+                    <span>{{list.time}}</span>
+                </div>
+                <div class="content" v-html="list.content">
+                    {{list.content}}
+                </div>
+            </div>
+           <empty v-if="isEmpty"></empty>
         </div>
     </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader';
-import DetailList from '@/components/MyActicle';
+import Empty from '@/components/Empty';
 
 export default {
     data() {
         return {
-            title: '关于我们',
+            newstype: ['公司简介','公司文化','公司背景','分支机构','促销活动','健康知识','运动加油站','成功案例','关注的问题','健康厨房'],
+            title: '',
             flag: true,
-            list: {
-                content : '重视科技、提升品质。重视新科技的引进，引进最先进的生产工艺和种植、养殖品种，并加以改良生根，同时也非常重视品质的稳定及领先地位，以维护顾客的利益。利益结合、成果共享。正大集团坚信，在符合共同利益的原则下，获取合理的利润，才能不断茁壮成长、长远为民生福祉做出贡献。因此，始终把公司的发展与合作伙伴的利益紧密结合在一起，不仅提供优质产品，又负责回收成品，还提供饲养技术、指导与管理能力训练，以满足消费者日新月异的需求。'
-            }
+            isEmpty: false,
+            list: ''
         }
     },
-    components: { MyHeader, DetailList }
+    computed:{
+     
+    },
+    created() {
+      var self = this;
+      var id = this.$route.query.id;
+      this.title = this.$route.query.title;
+      this.$store.dispatch('getCompanyProfile', self.title).then(function(){
+        self.list2();
+        if(!self.list){
+          self.isEmpty = true;
+        }
+      })
+    },
+    methods: {
+      list2(){
+        
+        switch(this.title){
+          case this.newstype[0]:
+          return this.list = this.$store.getters.getCompanyProfile[0];
+          
+          case this.newstype[1]:
+          return this.list = this.$store.getters.getCompanyCulture[0];
+
+          case this.newstype[2]:
+          return this.list = this.$store.getters.getCompanyBackground[0];
+
+          case this.newstype[3]:
+          return this.list = this.$store.getters.getCompanyBranch[0];
+
+        }
+        
+        
+      }
+    },
+    components: { MyHeader,Empty}
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.my-acticle{
+    padding: 1.08rem 0.2rem 0.2rem 0.2rem;
+    .content{
+       text-align: justify;
+       font-size: 0.28rem;
+    }
+    .title{
+        margin-bottom: 0.4rem;
+        p{
+            font-size: 0.36rem;
+            margin-bottom: 0.2rem;
+        }
+        i, span{
+            color: #888;
+            font-size: 0.24rem;
+        }
+        .icon-icon-stars{
+            margin-left: 0.2rem;
+        }
+    }
+}
 </style>

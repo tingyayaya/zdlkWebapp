@@ -2,7 +2,7 @@
     <div>
         <ul class="my-list" v-if="listRightPic">
             <li v-for="item in list">
-                <router-link :to="{ name: listRightPicLink }">
+                <router-link :to="{ name: listRightPicLink, query: { id: item.id }}">
                     <div class="info">
                         <p>{{item.title}}</p>
                         <span>{{item.time}}</span>
@@ -15,7 +15,7 @@
         </ul>
         <ul class="my-list listTil" v-if="listTil">
             <li v-for="item in list">
-                <router-link :to="{ name: listTillink }">
+                <router-link :to="{ name: listTillink,query: { id: item.id, title: item.title } }">
                     <div class="title">
                         <p>{{item.title}}</p>
                     </div>
@@ -36,7 +36,7 @@
         </ul>
         <ul class="my-list" v-if="listLeftPic">
             <li v-for="item in list">
-                 <router-link :to="{ name: listLeftPicLink }">
+                 <router-link :to="{ name: listLeftPicLink, query: { id: item.id } }">
                     <div class="imgbox">
                         <img :src="item.img" alt="">
                     </div>
@@ -88,13 +88,13 @@ export default {
     &.listAds{
        .small{
            color: #888;
-           font-size: 24px;
-           line-height: 44px;
+           font-size: 0.24rem;
+           line-height: 0.44rem;
        }
     }
     &.listTil{
         p{
-            width: 560px;
+            width: 5.6rem;
             overflow : hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -102,7 +102,7 @@ export default {
     }
     li{
         border-bottom: 1px solid #dedede;
-        padding: 20px;
+        padding: 0.2rem;
         a{
             width: 100%;
             display: flex;
@@ -111,25 +111,25 @@ export default {
             justify-content: space-between;
         }
         .imgbox{
-            width: 120px;
-            height: 120px;
+            width: 1.2rem;
+            height: 1.2rem;
             overflow: hidden;
         }
         .info{
             p{
-                font-size: 30px;
-                width: 450px;
+                font-size: 0.3rem;
+                width: 4.5rem;
                 overflow : hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
-                height: 84px;
-                line-height: 36px;
+                height: 0.84rem;
+                line-height: 0.36rem;
             }
             span{
                 color: #888;
-                font-size: 24px;
+                font-size: 0.24rem;
             }
         }
     }

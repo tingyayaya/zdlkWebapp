@@ -9,7 +9,7 @@
 
 .iconfont {
   font-family:"iconfont" !important;
-  font-size:16px;
+  font-size:0.16rem;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -122,158 +122,203 @@
 .icon-l {
   display: inline-block;
   background: url(../imgs/line.png) no-repeat;
-  background-size: 636px auto;
+  background-size: 6.36rem auto;
   cursor: pointer;
 }
 .icon-l-chart1{
-  width: 185px;
-  height: 126px;
-  background-position: -15px -15px;
+  width: 1.85rem;
+  height: 1.26rem;
+  background-position: -0.15rem -0.15rem;
 }
 .icon-l-chart2{
-  width: 185px;
-  height: 126px;
-  background-position: -225px -15px;
+  width: 1.85rem;
+  height: 1.26rem;
+  background-position: -2.25rem -0.15rem;
 }
 .icon-l-chart3{
-  width: 185px;
-  height: 126px;
-  background-position: -430px -15px;
+  width: 1.85rem;
+  height: 1.26rem;
+  background-position: -4.3rem -0.15rem;
+}
+.icon-l-chart4{
+  width: 1.85rem;
+  height: 1.26rem;
+  background-position: -0.15rem -1.5rem;
+}
+.icon-l-chart5{
+  width: 1.85rem;
+  height: 1.26rem;
+  background-position: -2.25rem -1.5rem;
 }
 .icon-z {
   display: inline-block;
   background: url(../imgs/icons.png) no-repeat;
-  background-size: 520px auto;
+  background-size: 5.2rem auto;
   cursor: pointer;
 }
 .icon-z-my-weight{
-  width: 80px;
-  height: 80px;
+  width: 0.8rem;
+  height: 0.8rem;
   background-position: 0 0;
 }
 .icon-z-blood-sugar{
-  width: 80px;
-  height: 80px;
-  background-position: -80px 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -0.8rem 0;
 }
 .icon-z-urine{
-  width: 80px;
-  height: 80px;
-  background-position: -160px 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -1.6rem 0;
+}
+.icon-z-pressure{
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -0.8rem -6rem;
+}
+.icon-z-waist{
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -1.6rem -6rem;
+}
+.icon-z-sport{
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: 0 -6rem;
 }
 .icon-z-dietitian{
-  width: 80px;
-  height: 80px;
-  background-position: 0 -80px;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: 0 -0.8rem;
   vertical-align: middle;
 }
 .icon-z-doctor{
-  width: 80px;
-  height: 80px;
-  background-position: -80px -80px;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -0.8rem -0.8rem;
   vertical-align: middle;
 }
 .icon-z-friends{
-  width: 80px;
-  height: 80px;
-  background-position: -160px -80px;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -1.6rem -0.8rem;
   vertical-align: middle;
 }
 .icon-z-hot-line{
-  width: 80px;
-  height: 80px;
-  background-position: -240px -80px;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-position: -2.4rem -0.8rem;
   vertical-align: middle;
 }
 .icon-z-star{
-  width: 40px;
-  height: 40px;
-  background-position: -260px -22px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -2.6rem -0.22rem;
 }
 .icon-z-unstar{
-  width: 40px;
-  height: 40px;
-  background-position: -340px -22px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -3.4rem -0.22rem;
 }
 .icon-z-re-diet{
-  width: 130px;
-  height: 130px;
-  background-position: 0 -160px;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: 0 -1.7rem;
 }
 .icon-z-re-weight{
-  width: 130px;
-  height: 130px;
-  background-position: -130px -160px;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: -1.3rem -1.7rem;
 }
 .icon-z-re-sugar{
-  width: 130px;
-  height: 130px;
-  background-position: -260px -160px;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: -2.6rem -1.7rem;
 }
 .icon-z-re-urine{
-  width: 130px;
-  height: 130px;
-  background-position: -390px -160px;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: -3.9rem -1.7rem;
+}
+.icon-z-re-sport{
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: -1.3rem -2.95rem;
+}
+.icon-z-re-waist{
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: -1.3rem -4.68rem;
+}
+.icon-z-re-pressure{
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position: 0 -4.68rem;
 }
 .icon-z-arrow-left{
-  width: 40px;
-  height: 40px;
-  background-position: -410px -25px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -4.1rem -0.25rem;
 }
 .icon-z-arrow-delete{
-  width: 40px;
-  height: 40px;
-  background-position: -340px -100px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -3.4rem -1rem;
 }
 .icon-z-nolist{
-  width: 120px;
-  height: 120px;
-  background-position:  0 -290px;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-position:  0 -2.9rem;
 }
 .icon-z-logo{
-  width: 150px;
-  height: 150px;
-  background-position: -350px -460px;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: -3.5rem -4.6rem;
 }
 .icon-z-success{
-  width: 150px;
-  height: 150px;
-  background-position: -350px -300px;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-position: -3.5rem -3rem;
 }
 .icon-z-user{
-  width: 40px;
-  height: 40px;
-  background-position: 0 -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: 0 -4.2rem;
 }
 .icon-z-tel{
-  width: 40px;
-  height: 40px;
-  background-position: -40px -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -0.4rem -4.2rem;
 }
 .icon-z-telCode{
-  width: 40px;
-  height: 40px;
-  background-position: -80px -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -0.8rem -4.2rem;
 }
 .icon-z-pass{
-  width: 40px;
-  height: 40px;
-  background-position: -120px -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -1.2rem -4.2rem;
 }
 .icon-z-height{
-  width: 40px;
-  height: 40px;
-  background-position: -160px -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -1.6rem -4.2rem;
 }
 .icon-z-weight{
-  width: 40px;
-  height: 40px;
-  background-position: -200px -420px;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -2rem -4.2rem;
+}
+.icon-z-evaluate{
+  width: 0.4rem;
+  height: 0.4rem;
+  background-position: -2.4rem -4.2rem;
 }
 .icon-z-loading{
-  width: 40px;
-  height: 40px;
+  width: 0.4rem;
+  height: 0.4rem;
   display: inline-block;
   background: url(../imgs/loading.gif) no-repeat;
-  background-size: 40px auto;
+  background-size: 0.4rem auto;
 }

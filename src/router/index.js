@@ -50,11 +50,14 @@ import userInfoView from '@/views/userInfo/userInfoView'
 import editInfoView from '@/views/userInfo/editInfoView'
 import personDataView from '@/views/userInfo/personDataView'
 import editPersonDataView from '@/views/userInfo/editPersonDataView'
+import edit2PersonDataView from '@/views/userInfo/edit2PersonDataView'
 
 import myCollectDeView from '@/views/mine/myCollectDeView'
 import myCollectView from '@/views/mine/myCollectView'
 import myReportView from '@/views/mine/myReportView'
+import uploadReportView from '@/views/mine/uploadReportPic'
 import myCompPicView from '@/views/mine/myCompPicView'
+import uploadCompView from '@/views/mine/uploadCompPic'
 import agreementView from '@/views/mine/agreementView'
 import setView from '@/views/mine/setView'
 
@@ -70,20 +73,31 @@ import recordSugarView from '@/views/record/recordSugarView'
 import recordFoodView from '@/views/record/recordFoodView'
 import recordUrineView from '@/views/record/recordUrineView'
 import recordWeightView from '@/views/record/recordWeightView'
-
+import recordSportView from '@/views/record/recordSportView'
+import recordWaistView from '@/views/record/recordWaistView'
+import recordPressureView from '@/views/record/recordPressureView'
 
 //首页的子页面
 import foodListView from '@/views/home/foodListView'
 import sugarListView from '@/views/home/sugarListView'
 import urineListView from '@/views/home/urineListView'
 import weightListView from '@/views/home/weightListView'
+import sportsListView from '@/views/home/sportsListView'
+import pressureListView from '@/views/home/pressureListView'
+import waistListView from '@/views/home/waistListView'
+
 import weightCurveView from '@/views/home/weightCurveView'
 import sugarCurveView from '@/views/home/sugarCurveView'
 import urineCurveView from '@/views/home/urineCurveView'
+import waistCurveView from '@/views/home/waistCurveView'
+import pressureCurveView from '@/views/home/pressureCurveView'
 
 import weightMoreView from '@/views/home/weightMoreView'
 import sugarMoreView from '@/views/home/sugarMoreView'
 import urineMoreView from '@/views/home/urineMoreView'
+import sportsMoreView from '@/views/home/sportsMoreView'
+import waistMoreView from '@/views/home/waistMoreView'
+import pressureMoreView from '@/views/home/pressureMoreView'
 
 //日程提醒
 import reminderView from '@/views/reminder/reminderView'
@@ -100,7 +114,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/loginView'
+      redirect: '/pages'
     },
     {
       path: '/pages',
@@ -281,6 +295,11 @@ export default new Router({
       component: editPersonDataView
     },
     {
+      path: '/edit2PersonDataView',
+      name: 'edit2PersonDataView',
+      component: edit2PersonDataView
+    },
+    {
       path: '/personDataView',
       name: 'personDataView',
       component: personDataView
@@ -304,6 +323,16 @@ export default new Router({
       path: '/myReportView',
       name: 'myReportView',
       component: myReportView
+    },
+    {
+      path: '/uploadReportView',
+      name: 'uploadReportView',
+      component: uploadReportView
+    },
+    {
+      path: '/uploadCompView',
+      name: 'uploadCompView',
+      component: uploadCompView
     },
     {
       path: '/myCompPicView',
@@ -371,6 +400,21 @@ export default new Router({
       component: recordSugarView
     },
     {
+      path: '/recordSportView',
+      name: 'recordSportView',
+      component: recordSportView
+    },
+    {
+      path: '/recordPressureView',
+      name: 'recordPressureView',
+      component: recordPressureView
+    },
+    {
+      path: '/recordWaistView',
+      name: 'recordWaistView',
+      component: recordWaistView
+    },
+    {
       path: '/foodListView',
       name: 'foodListView',
       component: foodListView
@@ -391,6 +435,21 @@ export default new Router({
       component: weightListView
     },
     {
+      path: '/pressureListView',
+      name: 'pressureListView',
+      component: pressureListView
+    },
+    {
+      path: '/waistListView',
+      name: 'waistListView',
+      component: waistListView
+    },
+    {
+      path: '/sportsListView',
+      name: 'sportsListView',
+      component: sportsListView
+    },
+    {
       path: '/weightCurveView',
       name: 'weightCurveView',
       component: weightCurveView
@@ -406,6 +465,16 @@ export default new Router({
       component: urineCurveView
     },
     {
+      path: '/waistCurveView',
+      name: 'waistCurveView',
+      component: waistCurveView
+    },
+    {
+      path: '/pressureCurveView',
+      name: 'pressureCurveView',
+      component: pressureCurveView
+    },
+    {
       path: '/urineMoreView',
       name: 'urineMoreView',
       component: urineMoreView
@@ -419,6 +488,21 @@ export default new Router({
       path: '/sugarMoreView',
       name: 'sugarMoreView',
       component: sugarMoreView
+    },
+    {
+      path: '/sportsMoreView',
+      name: 'sportsMoreView',
+      component: sportsMoreView
+    },
+    {
+      path: '/waistMoreView',
+      name: 'waistMoreView',
+      component: waistMoreView
+    },
+    {
+      path: '/pressureMoreView',
+      name: 'pressureMoreView',
+      component: pressureMoreView
     },
     {
       path: '/reminderView',

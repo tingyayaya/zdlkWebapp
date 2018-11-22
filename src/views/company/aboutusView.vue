@@ -12,12 +12,21 @@ export default {
         return {
             list: [
                 {
+                    title: '公司简介',
+                    id: '1',
+                    dataList: ''
+                },
+                {
                     title: '公司文化',
-                    id: '123'
+                    id: '2'
                 },
                 {
                     title: '公司背景',
-                    id: '123'
+                    id: '3'
+                },
+                 {
+                    title: '分支机构',
+                    id: '4'
                 }
             ]
         } 

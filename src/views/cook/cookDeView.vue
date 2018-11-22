@@ -18,31 +18,37 @@ export default {
     data() {
         return {
             title: '运动加油站',
+            articalId: '',
             flag: true,
-            star: true,
-            list: {
-                title: '营养指导，让你健康瘦身',
-                img: 'http://img.hb.aicdn.com/7fedfafb022185a637a0fde87eb252cf64a3c5c61de8d-vWla8U_fw658',
-                time: '2017-02-11',
-                num: '335',
-                id: '123',
-                content : '4月10日，以“开放创新的亚洲•繁荣发展的世界”为主题的博鳌亚洲论坛2018年年会开幕式在海南博鳌举行。中国国家主席习近平出席年会开幕式并发表重要主旨演讲。中国侨商投资企业协会会长、泰国正大集团资深董事长谢国民参加年会开幕式，并在9日下午举行的博鳌亚洲论坛“华商领袖与华人智库圆桌会议”上作重要发言'
-            }
+            star: false,
+            list: ''
         }
+    },
+    computed:{
+      list() {
+        return this.$store.getters.getArticleDetail
+      }
+    },
+    created() {
+      var self = this;
+      var id = this.$route.query.id;
+      this.$store.dispatch('getArticleDetail', id)
     },
     methods: {
         starToggle() {
-            this.star = ! this.star;
-           if(this.star){
-               Toast({
-                   message: '收藏成功',
-                   duration: 2500
+            var self = this;
+           
+            if(!this.star){
+               this.$store.dispatch('toCollect', {'lx':this.title, 'id': this.articalId }).then(function(){
+                 if(self.$store.getters.toCollect){
+                    self.star = ! self.star;
+                    Toast({
+                      message: '收藏'+self.$store.getters.toCollect,
+                      duration: 2500
+                    });
+                 }
                });
-            }else{
-                Toast({
-                   message: '取消收藏',
-                   duration: 2500
-               });
+               
             }
         }
     },

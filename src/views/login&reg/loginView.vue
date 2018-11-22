@@ -29,12 +29,14 @@ import { Toast } from 'mint-ui';
 export default {
     data() {
         return {
-           token: this.MYTOKEN,
            form: {
                 tel: '',
                 pass: ''
            }
         }
+    },
+    created(){
+      
     },
     components: { MyHeader },
     methods: {
@@ -73,19 +75,33 @@ export default {
             }else{     //都不为空
                 this.$axios({
                   method: 'get',
-                  url: '/select_login.jsp',
+                  url: self.baseurl.viewer+'/select_login.jsp',
                   params: {
-                    'token' : self.MYTOKEN,
+                    'token' : '',
                     'SKT122.SKF1926' : self.form.tel,
                     'SKT122.SKF1925' : self.form.pass
                   }
                 })
                 .then(function(res){
                   console.log(res);
+                  
                   if(res.data.code==0&&res.data.data.length!=0){   //登录成功
-                    sessionStorage.tel = res.data.data[0]['skt122.skf1926'];    //会员手机号
-                    sessionStorage.vipID = res.data.data[0]['skt122.skf1947'];   //会员ID
+                    //sessionStorage.tel = res.data.data[0]['skt122.skf1926'];    //会员手机号
+                    //sessionStorage.vipID = res.data.data[0]['skt122.skf1947'];   //会员ID
 
+                    localStorage.removeItem('userInfoState');
+                    
+                    var userInfoState = {
+                      tel: res.data.data[0]['skt122.skf1926'],
+                      vipID: res.data.data[0]['skt122.skf1947']
+                    }
+                    
+                    localStorage.setItem('userInfoState', JSON.stringify({
+                      userInfoState, 
+                      timestamp: new Date().getTime()
+                    }));
+                   
+                    self.$store.commit('updateVipId',userInfoState);
                     Toast({
                         message: '登录成功,将跳转',
                         position: 'center',
@@ -136,27 +152,27 @@ export default {
 <style lang="scss" scoped>
 .icon-z-logo{
     display: block;
-    margin: 50px auto;
+    margin: 0.5rem auto;
 }
 .input-list-icon{
-    padding: 20px;
+    padding: 0.2rem;
     li{
         width: 100%;
-        height: 78px;
-        margin-bottom: 30px;
+        height: 0.78rem;
+        margin-bottom: 0.3rem;
         position: relative;
         i{
             position: absolute;
-            top: 18px;
-            left: 20px;
+            top: 0.18rem;
+            left: 0.2rem;
         }
         input{
             width: 100%;
-            height: 78px;
+            height: 0.78rem;
             background-color:#f2f2f2;
             color: #000;
-            border-radius: 6px;
-            padding:20px 20px 20px 80px;
+            border-radius: 0.06rem;
+            padding:0.2rem 0.2rem 0.2rem 0.8rem;
             box-sizing: border-box;
         }
         input::-webkit-input-placeholder{
@@ -165,7 +181,7 @@ export default {
     }
     .more-link{
         width: 100%;
-        font-size: 24px;
+        font-size: 0.24rem;
         a:nth-child(1){
             float: left;
         }

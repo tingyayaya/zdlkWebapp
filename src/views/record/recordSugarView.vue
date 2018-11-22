@@ -6,52 +6,44 @@
                 <span>mmol/L</span>
                 <input type="number" placeholder="请输入血糖值" class="input-text" v-model="form.sugar">
             </div>
-            <div class="select" @click="openPicker"><span v-show="!form.date">请选择日期</span><span>{{form.date}}</span></div>
+            <div class="select" @click="openPicker"><span v-show="!currentTages2">请选择日期</span><span>{{currentTages2.name}}</span></div>
             <div class="select" @click="getpickn"><span v-show="!currentTages">请选择分类</span><span>{{currentTages.name}}</span></div>
             <!-- <textarea name="" id="" placeholder="晒饮食，晒心情"></textarea> -->
-            <div class="picker-pic">
-                <div class="pic-box" :style="{backgroundImage: 'url('+item+')'}" v-for="(item,index) in form.imgs" >
-                    <div class="delete" @click="delete2(index)"><i class="icon-z icon-z-arrow-delete"></i></div>
-                </div>
-                <div class="add-box" v-show="dispearla">
-                    <input type="file" @change="getImages" class="files" ref="feedbakcImg">
-                    <i class="icon iconfont icon-add-img"></i>
-                </div>
-            </div>
-             <mt-button type="primary"  class="bottom-btn2 middle-large" @click="submitForm">确认</mt-button>
+            <picker-pic @getpick="getpick"></picker-pic>
+            <mt-button type="primary"  class="bottom-btn2 middle-large" @click="submitForm">确认</mt-button>
         </div>
-         <mt-datetime-picker
-        ref="picker"
-        type="date"
-        year-format="{value} 年"
-        month-format="{value} 月"
-        date-format="{value} 日"
-        v-model="pickerValue"
-        :startDate="startDate"
-        :endDate="endDate"
-        @confirm="handleConfirm">
-    </mt-datetime-picker>
-         <my-picker :slots="slots44" :show="popupVisible" @selectValue="getSelectValue($event)"></my-picker>
+        
+       <!-- 分类 -->
+        <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
+           <my-picker :slots="slots44" @selectValue="getSelectValue($event)"></my-picker>
+        </mt-popup>
+
+        <!-- 日期 -->
+        <mt-popup v-model="popupVisible2" position="bottom" class="mint-popup">
+          <picker-day @selectValue="getSelectValue2($event)"></picker-day>
+        </mt-popup>
     </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader'
 import MyPicker from '@/components/MyPicker'
+import PickerPic from '@/components/PickerPic'
+import PickerDay from '@/components/PickerDay'
 import { Toast } from 'mint-ui';
 
 export default {
     data() {
         return {
-            startDate: new Date('2012'),
-            endDate: new Date('2032-12-31'),
-            pickerValue: '2012-01-01',
+          
             isDelete: false,
             dispearla: true,
             title: '记录血糖',
             currentTages: '',
+            currentTages2: '',
             defaultShow:true, 
             popupVisible: false,
+            popupVisible2: false,
             slots44: [{
                 flex: 1,
                 values: [
@@ -63,22 +55,13 @@ export default {
                         name: '早餐后2小时'
                     },{
                         id:'3',
-                        name: '中餐前'
-                    },{
-                        id:'1',
                         name: '中餐后2小时'
                     },{
-                        id:'2',
-                        name: '晚餐前'
-                    },{
-                        id:'3',
+                        id:'4',
                         name: '晚餐后2小时'
                     },{
-                        id:'3',
+                        id:'5',
                         name: '睡前'
-                    },{
-                        id:'3',
-                        name: '随机'
                     }
                 ],
                 className: 'slot1',
@@ -87,18 +70,20 @@ export default {
             form:{
                 imgs: [],
                 sugar: '',
-                date: ''
+                date: '',
+                typeId: '',
             }
         }
     },
     methods: {
+        getpick (data){
+          this.form.imgs = data;
+        },
         openPicker() {
-           this.$refs.picker.open(); 
+           this.popupVisible2 = true;
         },
         handleConfirm(){ 
-            
-            this.form.date = this.DateGMT(this.pickerValue);
-            
+          this.form.date = this.DateGMT(this.pickerValue);
         },
         DateGMT(time){
             var str = new Date(time);
@@ -121,32 +106,32 @@ export default {
             }
             return currentDate;
         },
+        formatNum(num){
+            return num.toString().replace(/^(\d)$/, "0$1");
+        },
+        daytime(){
+          var date = new Date();
+          return date.getFullYear() + '-' + this.formatNum(date.getMonth() + 1) + '-' + this.formatNum(date.getDate())+
+          ' '+ this.formatNum(date.getHours())+':'+this.formatNum(date.getMinutes())+':'+this.formatNum(date.getSeconds());
+        },
         getpickn(){
-            console.log(1);
-            this.popupVisible = true;
+          this.popupVisible = true;
         },
         getSelectValue(e){
             if(e[1]!=null){
                 this.currentTages = e[1];
+                this.form.typeId = e[1].id
+                console.log(this.form.typeId)
             }
             this.popupVisible = e[0];
         },
-        getImages(e){
-            var self = this;
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            this.$refs.feedbakcImg.value ='';
-            reader.readAsDataURL(file);
-            reader.onload = function(){
-                var base64 = reader.result;
-                self.form.imgs.push(base64);
-                if(self.form.imgs.length>=8){
-                    self.dispearla = false;
-                }
+        getSelectValue2(e){
+            if(e[1]!=null){
+                this.currentTages2 = e[1];
+                this.form.date = e[1].id
+                console.log(this.form.date)
             }
-        },
-        delete2(num){
-            this.form.imgs.splice(num, 1);
+            this.popupVisible2 = e[0];
         },
         validatesort(){
             if(this.currentTages==''){
@@ -160,8 +145,8 @@ export default {
                 return true;
             }
         },
-        validateimg(){
-            if(this.form.sugar==0){
+        validateNumber(){
+            if(this.form.sugar==''){
                 Toast({
                     message: '请输入血糖',
                     position: 'center',
@@ -179,16 +164,57 @@ export default {
                     position: 'center',
                     duration: 2500
                 });
-           }
+               return false;
+          }else{
+              return true;
+          }
+        },
+        getData() {
+          var self = this;
+          var time = this.daytime();
+          this.$axios({
+            method: 'get',
+            url: self.baseurl.viewer+'/Xuetang_Record.jsp',
+            params: {
+              'skt138.skf2266': self.form.typeId,
+              'skt138.skf2267': self.form.imgs,
+              'skt138.skf2262': JSON.parse(localStorage.getItem('userInfoState')).userInfoState.vipID,
+              'skt138.skf2263': 5,
+              'skt138.sf_create_time': time,
+              'skt138.skf2264': self.form.date,
+              'skt138.skf2265': self.form.sugar
+            }
+          })
+          .then(function(res){
+            if(res.data.code!=0){
+              Toast({
+                  message: '记录失败，请重试',
+                  position: 'center',
+                  duration: 1000
+              });
+              
+              var timer = setTimeout(function(){
+                  self.$router.push({name: 'recordView'})
+              },1000)
+            }else{
+              Toast({
+                  message: '记录成功',
+                  position: 'center',
+                  duration: 1000
+              });
+              var timer = setTimeout(function(){
+                 self.$router.push({name: 'recordView'})
+              },1000)
+            }
+          })
         },
         submitForm(){
-            //console.log(this.startDate)
-            this.validateimg();
-            this.validatesort()
-            this.validateDate();
+          if(this.validateNumber() && this.validatesort() && this.validateDate()){
+            this.getData()
+          }
         }
     },
-    components: { MyHeader, MyPicker }
+    components: { MyHeader, MyPicker, PickerPic, PickerDay }
 }
 </script>
 
@@ -201,44 +227,49 @@ $border1: 1px solid #dedede;
     .content{
         height: 100%;
         box-sizing: border-box;
-        padding: 108px 20px 20px 20px;
+        padding: 1.08rem 0.2rem 0.2rem 0.2rem;
         position: relative;
         .input-danwei{
             position: relative;
+            margin-bottom: 0.2rem;
             span{
                 position: absolute;
-                right: 20px;
-                top: 10px;
+                right: 0.2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 0.24rem;
             }
         }
         .input-text{
             width: 100%;
-            height: 68px;
+            height: 0.68rem;
             border: $border1;
-            padding: 20px;
+            padding: 0.1rem 0.2rem;
+            font-size: 0.28rem;
             box-sizing: border-box;
-            margin-bottom: 20px;
+           
         }
         .select{
             width: 100%;
-            height: 68px;
+            height: 0.68rem;
             border: 1px solid #dedede;
-            line-height: 68px;
-            padding: 0 20px;
+            line-height: 0.68rem;
+            padding: 0 0.2rem;
             box-sizing: border-box;
-            border-radius: 2px;
-            margin-bottom: 20px;
+            border-radius: 0.02rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.28rem;
         }
         textarea{
             width: 100%;
-            height: 260px;
-            padding: 20px;
+            height: 2.6rem;
+            padding: 0.2rem;
             border: 1px solid #dedede;
-            border-radius: 2px;
+            border-radius: 0.02rem;
             box-sizing: border-box;
         }
         .picker-pic{
-            padding:20px 0;
+            padding:0.2rem 0;
             width: 100%;
             display: flex;
             flex-flow: row wrap;
@@ -247,31 +278,31 @@ $border1: 1px solid #dedede;
                 background-size: cover;
                 background-repeat: no-repeat;
                 border: $border1;
-                width: 134px;
-                height: 134px;
-                margin-bottom: 20px;
-                margin-right: 16px;
+                width: 1.34rem;
+                height: 1.34rem;
+                margin-bottom: 0.2rem;
+                margin-right: 0.16rem;
                 position: relative;
                 .delete{
                     position: absolute;
                     top: 1px;
                     right: 1px;
-                    width: 40px;
-                    height: 40px;
+                    width: 0.4rem;
+                    height: 0.4rem;
                 }
             }
             .pic-box:nth-child(4),.pic-box:nth-child(8){
                 margin-right: 0;
             }
             .add-box{
-                width: 134px;
-                height: 134px;
+                width: 1.34rem;
+                height: 1.34rem;
                 border: 1px solid #dedede;
                 position: relative;
                 .icon-add-img{
                     z-index: 2;
                     color: #D8D8D8;
-                    font-size: 80px;
+                    font-size: 0.8rem;
                     position: absolute;
                     top:50%;
                     left: 50%;
@@ -284,14 +315,14 @@ $border1: 1px solid #dedede;
                     left: 0;
                     opacity: 0;
                     filter: alpha(opacity=0);
-                    width: 134px;
-                    height: 134px;
+                    width: 1.34rem;
+                    height: 1.34rem;
                 }
             }
         }
     }
     .formBox{
-        font-size: 30px;
+        font-size: 0.3rem;
     }
 }
 

@@ -1,10 +1,8 @@
 <template>
-    <mt-popup v-model="popupVisible=show" position="bottom" class="mint-popup" >
-        <mt-picker :slots="slots" @change="onValueChange" value-key="name" :showToolbar="true" ref="picker" :visibleItemCount="3" class="mypicker">
-            <span @click="handleCancel" class="cancel">取消</span>
-            <span @click="handleConfirm" class="sure">确认</span>
-        </mt-picker>
-    </mt-popup>
+    <mt-picker :slots="slots" @change="onValueChange" value-key="name" :showToolbar="true" ref="picker" :visibleItemCount="3" class="mypicker">
+        <span @click="handleCancel" class="cancel">取消</span>
+        <span @click="handleConfirm" class="sure">确认</span>
+    </mt-picker>
 </template>
 
 <script>
@@ -13,7 +11,6 @@ export default {
     data() {
         return {
             currentTages: '',
-            popupVisible: false
         }
     },
     created (){
@@ -21,7 +18,6 @@ export default {
     },
     props: {
         'slots': Array,
-        'show': Boolean
     },
     methods: {
         onValueChange(picker, values) {
@@ -32,8 +28,6 @@ export default {
         },
         handleConfirm (){
             this.currentTages = this.$refs.picker.getValues()[0];
-           
-            this.defaultShow = false;
             //console.log(this.currentTages)
             this.$emit('selectValue',[false,this.currentTages])
         },
@@ -47,24 +41,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mint-popup{
-    width: 100%;
-}
+
 .cancel{
-   width: 320px;
+   width: 3.2rem;
    float: left;
    text-align: left;
-   padding-left: 20px; 
+   padding-left: 0.2rem; 
    box-sizing: border-box;
-   font-size: 28px;
+   font-size: 0.28rem;
 }
 .sure{
-    padding-right: 20px; 
+    padding-right: 0.2rem; 
     float: left;
-    width: 320px;
+    width: 3.2rem;
     text-align: right;
     box-sizing: border-box;
     color: #F47340;
-    font-size: 28px;
+    font-size: 0.28rem;
 }
 </style>

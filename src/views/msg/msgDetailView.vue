@@ -32,15 +32,15 @@ export default {
 .msg-detail-view{
     .mymessage{
         text-align: center;
-        padding: 108px 20px 20px 20px;
+        padding: 1.08rem 0.2rem 0.2rem 0.2rem;
         p{
             text-align: left;
-            margin-top: 20px;
+            margin-top: 0.2rem;
             text-align: justify;
         }
         span{
             color: #888;
-            font-size: 24px;
+            font-size: 0.24rem;
             
         }
     }

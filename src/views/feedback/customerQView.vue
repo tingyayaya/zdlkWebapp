@@ -28,22 +28,22 @@ export default {
 
 <style lang="scss" scoped>
 .content-h{
-   min-height: 760px;
+   min-height: 7.6rem;
    widows: 100%;
-   padding: 20px;
+   padding: 0.2rem;
    box-sizing: border-box;
    position: relative;
    .margin-b-50{
-       margin-bottom: 50px;
+       margin-bottom: 0.5rem;
    }
    p{
-       line-height: 60px;
+       line-height: 0.6rem;
    }
    textarea{
        width: 100%;
-       height: 260px;
+       height: 2.6rem;
        border: 1px solid #dedede;
-       padding: 20px;
+       padding: 0.2rem;
        box-sizing: border-box;
    }
 }

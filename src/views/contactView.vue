@@ -48,13 +48,13 @@ export default {
 .contact-view{
     width: 100%;
     ul{
-        font-size: 28px;
+        font-size: 0.28rem;
         li{
-            padding: 10px;
+            padding: 0.1rem;
             box-sizing: border-box;
             border-bottom: 1px solid #dedede;
             i{
-                margin-right: 10px;
+                margin-right: 0.1rem;
             }
             a{
                 width: 100%;

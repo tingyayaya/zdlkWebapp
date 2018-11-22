@@ -30,9 +30,9 @@ export default {
 
 <style lang="scss" scoped>
 header{
-    height: 88px !important;
+    height: 0.88rem !important;
     background: #fff url(../assets/imgs/header-bg.png) no-repeat;
-    background-size: 640px auto;
+    background-size: 100% auto;
     overflow: hidden;
     width: 100%;
 }
@@ -44,17 +44,17 @@ header{
        flex-flow: row nowrap;
        align-items: center;
        z-index: 999;
-       padding: 0 20px;
+       padding: 0 0.2rem;
        box-sizing: border-box;
-       font-size: 28px;
+       font-size: 0.28rem;
        .left{
            flex: 1;
-           font-size: 50px;
-            cursor: pointer;
+          //  font-size: 0.3rem;
+           cursor: pointer;
        }
        .center{
            flex: 4;
-           font-size: 32px;
+           font-size: 0.32rem;
            text-align: center;
            overflow: hidden;
            text-overflow: ellipsis;
@@ -63,7 +63,7 @@ header{
        .right{
            flex: 1;
            text-align: right;
-           padding-right: 10px;
+           padding-right: 0.1rem;
            cursor: pointer;
        }
    }

@@ -61,16 +61,16 @@ export default {
 .edit-div{
     width: 100%;
     background: #fff;
-    margin-top: 20px;
+    margin-top: 0.2rem;
     border-bottom: 1px solid #dedede;
     border-top: 1px solid #dedede;
-    font-size: 28px;
+    font-size: 0.26rem;
     li{
-        padding: 1px 0px 1px 20px;
+        padding: 1px 0rem 1px 0.2rem;
         display: flex;
         flex-flow: column wrap;
         p{
-            line-height: 66px;
+            line-height: 0.66rem;
             position: relative;
             cursor: pointer;
             &.active{
@@ -81,7 +81,7 @@ export default {
             .icon-select{
                 color:transparent;
                 position: absolute;
-                right: 20px;
+                right: 0.2rem;
             }
         }
         p+p{
@@ -91,9 +91,9 @@ export default {
     
 }
 .errorTip{
-    padding: 10px 20px;
+    padding: 0.1rem 0.2rem;
     color: #F47340;
-    font-size: 24px;
+    font-size: 0.24rem;
 }
  
 </style>

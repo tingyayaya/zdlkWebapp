@@ -63,7 +63,6 @@ const TIME_COUNT = 60;
 export default {
     data() {
         return {
-            token: this.MYTOKEN,
             form: {
                 tel: '',
                 pass: '',
@@ -153,14 +152,14 @@ export default {
           var self = this;
           this.$axios({
             method: 'get',
-            url: '/add_reg.jsp',
+            url: self.baseurl.viewer+'/add_reg.jsp',
             params: {
               'skt122.skf1924': self.form.name,
               'skt122.skf1925': self.form.pass,
               'skt122.skf1927': self.form.height,
               'skt122.skf1928': self.form.weight,
               'skt122.skf1926': self.form.tel,
-              'token' : self.token
+              'token' : ''
             }
           })
           .then(function(res){
@@ -245,57 +244,57 @@ export default {
 <style lang="scss" scoped>
 .icon-z-logo{
     display: block;
-    margin: 50px auto;
+    margin: 0.5rem auto;
 }
 .icon-z-success{
      display: block;
-    margin: 50px auto;
+    margin: 0.5rem auto;
 }
 .step{
-    padding: 40px 20px 20px 20px;
+    padding: 0.4rem 0.2rem 0.2rem 0.2rem;
     color: #C5D01A;
-    font-size: 24px;
+    font-size: 0.24rem;
 }
 .input-list-icon{
-    padding: 20px;
+    padding: 0.2rem;
     li{
         width: 100%;
-        height: 78px;
-        margin-bottom: 30px;
+        height: 0.78rem;
+        margin-bottom: 0.3rem;
         position: relative;
         i{
             position: absolute;
-            top: 18px;
-            left: 20px;
+            top: 0.18rem;
+            left: 0.2rem;
         }
         .unit{
             position: absolute;
-            top: 18px;
-            right: 20px;
+            top: 0.18rem;
+            right: 0.2rem;
         }
         input{
             width: 100%;
-            height: 78px;
+            height: 0.78rem;
             background-color:#f2f2f2;
             color: #000;
-            border-radius: 6px;
-            padding:20px 20px 20px 80px;
+            border-radius: 0.06rem;
+            padding:0.2rem 0.2rem 0.2rem 0.8rem;
             box-sizing: border-box;
         }
         input::-webkit-input-placeholder{
             color: #b6b6b6;
         }
         .li-btn{
-            margin-top: 14px; 
+            margin-top: 0.14rem; 
             position: absolute;
-            right: 20px;
-            height: 50px !important;
-            min-width: 100px;
+            right: 0.2rem;
+            height: 0.5rem !important;
+            min-width: 1rem;
         }
     }
     .more-link{
         width: 100%;
-        font-size: 24px;
+        font-size: 0.24rem;
         text-align: center;
     }
 }

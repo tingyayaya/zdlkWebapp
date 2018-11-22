@@ -3,7 +3,7 @@
         <div class="my-nav-r" :class="{hassearch:ishassearch}">
             <ul class="my-nav">
                 <router-link v-for="(item, index, key) in list" :to="{ name: item.router, params: {activeId:index}}" :key="index">
-                    <li @click="changeTab(index)" :class="{active: active==index}">
+                    <li @click="changeTab(index,item.name)" :class="{active: active==index}">
                         {{item.name}}
                         <span></span>
                     </li>
@@ -30,9 +30,9 @@ export default {
         }
     },
     methods: {
-        changeTab(index) {
+        changeTab(index, name) {
             this.active = index;
-            this.$emit('tabchange', index);
+            this.$emit('tabchange', {index: index, name: name});
             //console.log(index);
         }
     },
@@ -51,10 +51,11 @@ export default {
   -webkit-overflow-x: scroll;
   z-index: 999;
   position: fixed;
-  top:88px;
+  
+  top:0.88rem;
   &.hassearch{
        position: fixed;
-       top:176px;
+       top:1.76rem;
   }
   &::-webkit-scrollbar{ 
     width: 0; 
@@ -63,25 +64,27 @@ export default {
     }
 }
 .my-nav{
-    min-width:500px; 
+    min-width:5rem; 
     display: flex;
     a{
-        line-height: 68px;
+        line-height: 0.68rem;
         text-align: center;
+        flex: 1;
         li{ 
             display: inline-block; 
             text-align: center;
             position: relative;
             text-overflow: ellipsis;
             word-break: keep-all;
-            min-width: 120px;
-            margin: 0 20px;
+            min-width: 1.2rem;
+            white-space: nowrap;
+            margin: 0 0.2rem;
             &.active{
                 color:#5B873C;
                 span{
                     display: inline-block;
-                    width: 60px;
-                    height: 4px;
+                    width: 0.6rem;
+                    height: 0.04rem;
                     background-color:#5B873C;
                     position:absolute;
                     bottom: 0;

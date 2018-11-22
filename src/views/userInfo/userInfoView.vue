@@ -1,18 +1,20 @@
 <template>
     <div class="userinfo-view">
-        <my-header :title="title" :left="flag"></my-header>
+        <my-header :title="title" :left="false">
+          <router-link :to="{ name: 'mineView' }" slot="otherleft">
+            <i class="icon-z icon-z-arrow-left"></i>
+          </router-link>
+        </my-header>
         <div class="my-list-space isheader">
             <ul>
-                <li>
-                    <router-link :to="{name:'editInfoView', query:{ title:'姓名', content: list.name, type: 'text'}}">
-                        <label for="">姓名</label>
-                        <span>{{list.name}} <i class="icon iconfont icon-list-right"></i> </span>
-                    </router-link>
+                <li class="text">
+                    <label for="">姓名</label>
+                    <span>{{list.name}}</span>
                 </li>
                 <li>
                     <router-link :to="{name:'editInfoView', query:{ title:'手机号', content: list.tel, type: 'tel'}}">
                     <label for="">手机号</label>
-                    <span>{{list.tel}} <i class="icon iconfont icon-list-right"></i> </span>
+                    <span><span>{{list.tel}}</span> <i class="icon iconfont icon-list-right"></i> </span>
                     </router-link>
                 </li>
             </ul>
@@ -31,14 +33,20 @@ export default {
     components: { MyHeader },
     data() {
         return {
-            title: '账户信息',
-            flag: true,
-            list:{
-                name: '朱小猪',
-                tel: '13522222215',
-                id: '3'
-            }
+          userInfoState: JSON.parse(localStorage.getItem('userInfoState')).userInfoState,
+          title: '账户信息',
+          flag: true,
+          list:{
+              name: '',
+              tel: '',
+          }
         }
+    },
+    created() {
+      this.$store.dispatch('getInfo').then(() => {
+        console.log(this.$store.getters.getInfo)
+        this.list =  this.$store.getters.getInfo
+      })
     },
     methods: {
         submit() {
@@ -47,17 +55,21 @@ export default {
         loginOut() {
             var self = this;
             MessageBox.confirm('您确认要退出么?').then(action => {
+               localStorage.removeItem('userInfoState');
                 self.$router.push({name: 'loginView'})
             })
             .catch(()=>{
                 //防止取消操作报错
             });
+        },
+        getData() {
+         
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .userinfo-view{
     height: 100%;
     background: #f8f8f8;
@@ -66,8 +78,8 @@ export default {
     ul{
         width: 100%;
         background: #fff;
-        padding-left: 20px;
-        margin-top: 20px;
+        padding-left: 0.2rem;
+        margin-top: 0.2rem;
         border-bottom: 1px solid #dedede;
         border-top: 1px solid #dedede;
         box-sizing: border-box;
@@ -75,8 +87,13 @@ export default {
                 border-top: 1px solid #dedede;
             }
         li{
-            line-height: 66px;
-            
+            line-height: 0.78rem;
+            &.text{
+              display: flex;
+              span{
+                 margin-right: 0.3rem;
+              }
+            }
             a{
                display: flex;
             }
@@ -88,7 +105,8 @@ export default {
                 flex: 2;
                 text-align: right;
                 i{
-                    margin-right: 10px;
+                  font-size: 0.26rem;
+                  margin-right: 0.2rem;
                 }
             }
         }

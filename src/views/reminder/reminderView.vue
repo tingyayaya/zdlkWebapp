@@ -6,11 +6,11 @@
             </router-link>
         </my-header>
         <div class="isheader">
-            <vue-event-calendar :events="demoEvents" :title="title2" @day-changed="handleDayChanged"></vue-event-calendar>
-            <div class="no-data" v-show="demoEvents.length==0"><i class="icon-z icon-z-nolist"></i><p>您还没有日程提醒</p></div>
+            <vue-event-calendar :events="events" :title="title2" @day-changed="handleDayChanged"></vue-event-calendar>
+            <div class="no-data" v-show="currentEvents.length==0"><i class="icon-z icon-z-nolist"></i><p>您还没有日程提醒</p></div>
             <ul class="envet-list">
                 <p class="title-t">{{title2}}</p>
-                <li v-for="item in demoEvents">
+                <li v-for="item in currentEvents">
                     <div class="title-part">
                         <p class="title-remind">{{item.title}}</p>
                         <span>{{item.remindTime}}提醒</span>
@@ -33,30 +33,29 @@ export default {
         return {
             title: '日程提醒',
             title2: '',
-            demoEvents: [{
-                date: '2018/06/11', // 必填
-                remindTime: '16:00',
-                desc: '很重要',
-                title: '开会，主题大会' // 必填
-            }, {
-                date: '2016/12/15',
-                title: '开会，主题大会',
-                remindTime: '16:00',
-                desc: '很重要',
-                customClass: 'disabled highlight' // 自定义日历单元格的Class，会加到对应的日历单元格上
-            }],
-            currentEvents:[]
+            currentEvents:[],
+            events: []
         }
     },
     created(){
-        this.title2 = this.getNowDate();
-        sessionStorage.date = this.title2;
+      var self = this;
+      this.title2 = this.getNowDate();
+      this.$store.dispatch('getSchedule', this.title2).then(function(){
+        var des = self.$store.getters.getSchedule;
+        self.currentEvents = des
+      })
     },
     methods: {
         handleDayChanged (day) {
-            this.$EventCalendar.toDate(day.date)
-            this.title2 = day.date;
-            sessionStorage.date = this.title2;
+            var self = this;
+            var date = day.date.replace(/\//g, '-')
+            this.$store.dispatch('getSchedule', date).then(function(){
+               self.$EventCalendar.toDate(day.date)
+               self.title2 = day.date;
+               sessionStorage.date = date;
+               var data = self.$store.getters.getSchedule
+               self.currentEvents = data 
+            });
         },
         add(){
             this.$router.push({name :'addRemListView'})
@@ -101,17 +100,14 @@ export default {
 .today{
     color: #AACB3C;
 }
-.__vev_calendar-wrapper .cal-wrapper{
-    height: 420px;
-    overflow: hidden;
-}
+
 .events-wrapper{
    background: inherit !important;
 }
 .selected-day {
    position: relative;
-   z-index: 99;
-   color: #fff;
+   z-index: 99 !important;
+   color: #fff !important;
 }
 .cal-body{
     background-color: #fff;
@@ -119,11 +115,11 @@ export default {
 .selected-day:after{
     position: absolute;
     content: '';
-    width: 52px;
-    height: 38px;
+    width: 0.52rem;
+    height: 0.38rem;
     background: #F9BA17;
     display: block;
-    border-radius: 2px;
+    border-radius: 0.02rem;
     top: 50%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -132,43 +128,43 @@ export default {
    color: #fff !important;
 }
 .margin-top-20{
-    margin-top:60px;
+    margin-top:0.6rem;
 }
 .no-data{
        width: 100%;
        text-align: center;
        i{
-           margin-top: 100px;
+           margin-top: 1rem;
        }
        p{
            color: #4C4C4C;
-           font-size: 24px;
-           line-height: 50px;
+           font-size: 0.24rem;
+           line-height: 0.5rem;
        }
     }
 
 .envet-list{
-    margin: 20px 0;
+    margin: 0.2rem 0;
     .title-t{
         text-align: center;
-        padding: 10px 0;
+        padding: 0.1rem 0;
         color:#888888;
     }
     li{
         background: #fff;
         border-top: 1px solid #dedede;
         border-bottom: 1px solid #dedede;
-        margin-bottom: 20px;
+        margin-bottom: 0.2rem;
         box-sizing: border-box;
-        padding: 20px;
+        padding: 0.2rem;
         color: #888;
-        font-size: 24px;
+        font-size: 0.24rem;
         .title-part{
             display: flex;
             span{
                 flex:1;
                 text-align: right;
-                line-height: 44px;
+                line-height: 0.44rem;
             }
             p{
                 flex:3;
@@ -177,7 +173,7 @@ export default {
             }
         }
         .title-remind{
-            font-size: 30px;
+            font-size: 0.3rem;
             color: #000;
         }
     }

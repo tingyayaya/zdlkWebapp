@@ -12,7 +12,7 @@
             <i class="icon iconfont icon-icon-time"></i>
             <span>{{list.time}}</span>
         </div>
-        <div class="content">
+        <div class="content" v-html="list.content">
             {{list.content}}
         </div>
     </div>
@@ -37,23 +37,23 @@ export default {
 
 <style lang="scss" scoped>
 .my-acticle{
-    padding: 108px 20px 20px 20px;
+    padding: 1.08rem 0.2rem 0.2rem 0.2rem;
     .content{
        text-align: justify;
-       font-size: 28px;
+       font-size: 0.28rem;
     }
     .title{
-        margin-bottom: 40px;
+        margin-bottom: 0.4rem;
         p{
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 0.36rem;
+            margin-bottom: 0.2rem;
         }
         i, span{
             color: #888;
-            font-size: 24px;
+            font-size: 0.24rem;
         }
         .icon-icon-stars{
-            margin-left: 20px;
+            margin-left: 0.2rem;
         }
     }
 }

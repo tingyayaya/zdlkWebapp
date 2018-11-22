@@ -3,8 +3,17 @@
         <my-header :title="title" :left="flag" >
             <i class="icon-z " :class="star ? 'icon-z-star':'icon-z-unstar'" slot="stars"  @click="starToggle"></i>
         </my-header>
-        <div>
-           <detail-list :list="list" :type1="true"></detail-list>
+        <div class="my-acticle isheader">
+            <div class="title">
+                <p>{{list.title}}</p>
+                <i class="icon iconfont icon-icon-time"></i>
+                <span>{{list.time}}</span>
+                <i class="icon iconfont icon-icon-stars"></i>
+                <span>{{list.num}}</span>
+            </div>
+            <div class="content" v-html="list.content">
+                {{list.content}}
+            </div>
         </div>
     </div>
 </template>
@@ -18,29 +27,37 @@ export default {
     data() {
         return {
             title: '成功案例',
+            articalId: '',
             flag: true,
-            star: true,
-            list: {
-                title : '案例一',
-                time : '2017-05-03',
-                num: '342',
-                content : '肥胖不仅仅会影响人们的体型美观，更重要的是肥胖导致的一系列严重的并发症如高血压病、糖尿病、血脂紊乱、冠心病、恶性肿瘤等，控制体重也是预防代谢综合征和预防2型糖尿病及心血管疾病最直接的途径。'
-            }
+            star: false,
+            list: ''
         }
+    },
+    computed:{
+      list() {
+        return this.$store.getters.getArticleDetail
+      }
+    },
+    created() {
+      var self = this;
+      var id = this.$route.query.id;
+      this.$store.dispatch('getArticleDetail', id)
     },
     methods: {
         starToggle() {
-            this.star = ! this.star;
-            if(this.star){
-               Toast({
-                   message: '收藏成功',
-                   duration: 2500
+            var self = this;
+           
+            if(!this.star){
+               this.$store.dispatch('toCollect', {'lx':this.title, 'id': this.articalId }).then(function(){
+                 if(self.$store.getters.toCollect){
+                    self.star = ! self.star;
+                    Toast({
+                      message: '收藏'+self.$store.getters.toCollect,
+                      duration: 2500
+                    });
+                 }
                });
-            }else{
-                Toast({
-                   message: '取消收藏',
-                   duration: 2500
-               });
+               
             }
         }
     },
@@ -49,6 +66,26 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+.my-acticle{
+    padding: 1.08rem 0.2rem 0.2rem 0.2rem;
+    .content{
+       text-align: justify;
+       font-size: 0.28rem;
+    }
+    .title{
+        margin-bottom: 0.4rem;
+        p{
+            font-size: 0.36rem;
+            margin-bottom: 0.2rem;
+        }
+        i, span{
+            color: #888;
+            font-size: 0.24rem;
+        }
+        .icon-icon-stars{
+            margin-left: 0.2rem;
+        }
+    }
+}
 </style>

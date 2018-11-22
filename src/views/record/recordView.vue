@@ -1,6 +1,8 @@
 <template>
     <div class="record-view isheader">
-        <my-header :left="true" :title="title"></my-header>
+        <my-header :left="false" :title="title">
+           <i class="icon-z icon-z-arrow-left"  @click="goback" slot="otherleft"></i>
+        </my-header>
         <p>请选择记录项</p>
         <ul class="spread-lsit">
             <li>
@@ -28,6 +30,24 @@
                     <span>血糖</span>
                 </router-link>
             </li>
+            <li>
+                <router-link :to="{name:'recordSportView'}">
+                    <i class="icon-z icon-z-re-sport"></i>
+                    <span>记运动量</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link :to="{name:'recordWaistView'}">
+                    <i class="icon-z icon-z-re-waist"></i>
+                    <span>记腰围</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link :to="{name:'recordPressureView'}">
+                    <i class="icon-z icon-z-re-pressure"></i>
+                    <span>记血压</span>
+                </router-link>
+            </li>
         </ul>
     </div>
 </template>
@@ -41,27 +61,39 @@ export default {
             title: '记录'
         }
     },
+    methods: {
+      goback(){
+        this.$router.push({name: 'mineView'})
+      }
+    },
     components: { MyHeader }
 
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .record-view{
      p{
          text-align: center;
-         padding: 160px 0;
+         padding: 1.4rem 0;
          color: #888;
      }
      .spread-lsit{
-         text-align: center;
-         width: 100%;
+         width: 90%;
+         font-size: 0;
+         margin: 0 auto;
          li{
              display: inline-block;
              text-align: center;
-             width: 22%;
+             width: 25%;
+             margin-bottom: 0.4rem;
+             i{
+                display: block;
+                margin: 0 auto;
+             }
+            
              span{
-                 font-size: 24px;
+                 font-size: 0.24rem;
              }
          }
      }

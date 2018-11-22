@@ -5,8 +5,8 @@
                  <i class="icon-z icon-z-arrow-left"></i>
             </router-link>
         </my-header>
-        <my-nav :list="list" @tabchange = "listChild ($event)"></my-nav>
-        <my-list :list="data" :listRightPic="true" listRightPicLink = "knowledgeDeView" class="isnav"></my-list>
+        <my-nav :list="navlist" @tabchange = "listChild ($event)" v-if="navlist"></my-nav>
+        <my-list :list="list" :listRightPic="true" listRightPicLink = "knowledgeDeView" class="isnav" v-if="list"></my-list>
     </div>
 </template>
 
@@ -21,27 +21,29 @@ export default {
         return {
             title: '健康知识',
             flag: false,
-            list: [ {name: '分类1'}, {name: '分类2'}, { name: '分类3'},{ name: '分类4'},{ name: '分类5'}],
-            data: [
-                {
-                    img: 'http://img.hb.aicdn.com/b87734aa50aceca53cc1cee9d145eb394054183960e23-HVnzLX_fw658',
-                    title: '听说你工作太忙没空运动？别为懒找借口',
-                    time: '2017-02-11',
-                    id: '123'
-                },
-                {
-                    img: 'http://img.hb.aicdn.com/1ec89f7633150fb0e9c28b0a40c956b60a65f54526a34-Eqaxel_fw658',
-                    title: '营养指导，让你健康瘦身',
-                    time: '2017-02-11',
-                    id: '123'
-                }
-            ]
+            isEmpty: false,
+            navlist: [],
+            list: []
         }
     },
-    methods: {
-        listChild(e) {
-            console.log(e)
+    created(){
+      var self = this;
+      this.$store.dispatch('getKnowledgeSorts').then(function(){
+        self.navlist = self.$store.getters.getKnowledgeSorts;
+        if(self.navlist.length){
+          self.$store.dispatch('getArticle', {'lx':'健康知识', 'fl': self.navlist[0].name}).then(function(){
+            self.list = self.$store.getters.getArticle
+          })
         }
+      })
+    },
+    methods: {
+      listChild(e) {
+        var self = this;
+        self.$store.dispatch('getArticle', {'lx':'健康知识', 'fl': e.name}).then(function(){
+          self.list = self.$store.getters.getArticle
+        })
+      }
     }
 }
 </script>

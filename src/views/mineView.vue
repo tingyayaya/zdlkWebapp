@@ -16,7 +16,6 @@
                 </div>
            </div>
       </div>
-  
       <ul>
         <li>
         <router-link :to="{ name: 'personDataView' }">
@@ -74,21 +73,25 @@
 
 <script>
 import MyHeader from '../components/MyHeader'
+import {mapState} from 'vuex'
 
 export default {
      components: { MyHeader},
      data() {
        return {
+         userInfoState: JSON.parse(localStorage.getItem('userInfoState')).userInfoState,
          flag: false,
          isComfirm: 0,
          title: '我的',
-         user: {
-           name :'诸葛亮',
-           codeimg: 'https://qr.api.cli.im/qr?data=who%2Bam%2BI&level=H&transparent=false&bgcolor=%23FFFFFF&forecolor=&blockpixel=12&marginblock=2&logourl=&size=400&text=&logoshape=&fontsize=30&fontfamily=msyh.ttf&fontcolor=%23000000&incolor=&outcolor=&qrcode_eyes=&background=&wper=0&hper=0&tper=0&lper=0&eye_use_fore=1&qrpad=10&kid=bizcliim&time=1528265230&key=a2b3d065aaed64d2c2b01ff1ae53e623'
-         }
+       }
+     },
+     computed: {
+       user(){
+        return this.$store.getters.getInfo;
        }
      },
      created(){
+       this.$store.dispatch('getInfo');
        this.getState();
      },
      methods: {
@@ -97,13 +100,14 @@ export default {
         var self = this;
         this.$axios({
           methods: 'post',
-          url: '/select_protocolstatue.jsp',
+          url: self.baseurl.viewer+'/select_protocolstatue.jsp',
           params: {
-            token: self.MYTOKEN,
-            'SKT123.SKF1934': sessionStorage.tel
+            token: '',
+            'SKT123.SKF1934': self.userInfoState.tel,
           }
         })
         .then(function(res){
+         
           if(res.data.code==0&&res.data.data[0]['count(skt123.skf1935)']!=0){
             self.isComfirm = 1;
           }else{
@@ -112,45 +116,47 @@ export default {
         })
       }
      }
+     
 }
 </script>
 
 <style lang="scss" scoped>
 
 .myheader2{
-    height: 260px !important;
+    height: 2.6rem !important;
     background: #fff url(../assets/imgs/header-bg.png) no-repeat;
-    background-size: 640px auto;
+    background-size: 6.4rem auto;
     overflow: hidden;
     width: 100%;
     position: fixed;
     top: 0;
     z-index: 998;
-    padding-top: 88px;
+    padding-top: 0.88rem;
     box-sizing: border-box;
     border-bottom: 1px solid #FFFAAE;
   .head-info {
      display: flex;
      flex-flow: row nowrap;
-     padding: 40px 0;
-     font-size: 30px;
+     padding: 0.4rem 0;
+     font-size: 0.3rem;
 
      .left {
        flex: 2;
-       padding-left: 60px;
+       padding-left: 0.6rem;
        p{
-         line-height: 50px;
+         line-height: 0.5rem;
        }
        .icon-head-user{
-         font-size: 30px;
+         font-size: 0.3rem;
          color: #EBAD0A;
        }
        .icon-list-right{
-         margin-left: 80px;
+         margin-left: 0.8rem;
+         font-size: 0.26rem;
        }
        .small{
          color: #6a6a6a;
-         font-size: 24px;
+         font-size: 0.24rem;
        }
      }
 
@@ -158,9 +164,9 @@ export default {
         flex: 1;
         text-align: center;
         img{
-          width: 84px;
-          height: 84px;
-          margin-top: 10px;
+          width: 0.84rem;
+          height: 0.84rem;
+          margin-top: 0.1rem;
         }
      }
 
@@ -170,40 +176,38 @@ export default {
 .mine-view{
     flex: 1;
     background: #f8f8f8;
-    height: 100%;
     padding: 0;
-    padding-bottom: 120px;
     .icon-head-set{
-        font-size: 36px;
+        font-size: 0.36rem;
     }
     ul{   
         padding: 0;
-        padding-top: 172px;
-        padding-bottom: 120px;
-        font-size: 28px;
+        padding-top: 1.72rem;
+        padding-bottom: 1.2rem;
+        font-size: 0.28rem;
         li{
-            padding-left: 20px;
+            padding-left: 0.2rem;
             box-sizing: border-box;
             border-bottom: 1px solid #dedede;
             border-top: 1px solid #dedede;
-            margin-top: 20px;
+            margin-top: 0.2rem;
             background-color:#fff;
             .small-text{
-                font-size:24px; 
+                font-size:0.24rem; 
                 color:#888;
             }
             a+a{
                     border-top: 1px solid #dedede;
             }
             i{
-                margin-right: 10px;
-                font-size: 30px;
+                margin-right: 0.1rem;
+                font-size: 0.3rem;
             }
             a{
                 width: 100%;
                 height: 100%;
                 display: inline-block;
-                line-height: 68px;
+                line-height: 0.78rem;
                 position: relative;
             }
             a:active{
@@ -213,7 +217,7 @@ export default {
                 color: #AACB3C;
             }
             .icon-list-poto{
-                font-size: 26px;
+                font-size: 0.26rem;
                 color: #3CC0CB;
             }
             .icon-list-collect{
@@ -239,9 +243,9 @@ export default {
             }
             .icon-list-right{
                 color: #b3b3b3;
-                font-size: 26px;
+                font-size: 0.26rem;
                 position: absolute;
-                right: 20px;
+                right: 0.2rem;
             }
         }
     }

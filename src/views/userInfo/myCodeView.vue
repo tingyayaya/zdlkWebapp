@@ -29,9 +29,9 @@ export default {
 .my-code{
     text-align: center;
     img{
-        width:350px;
-        height: 350px;
-        margin-top: 150px;
+        width:3.5rem;
+        height: 3.5rem;
+        margin-top: 1.5rem;
     }
 }
 </style>

@@ -25,15 +25,8 @@ export default {
     },
     methods: {
         selectStar(index, event) {
-            //console.log(index);
-            //console.log(this.score)
-            var diff = this.score - index;
+            this.score = index + 1;
            
-            if(diff==0.5){
-                this.score = index + 1;
-            }else{
-                this.score = index + 0.5;
-            }
             this.$emit('scores', this.score)
         }
     },
@@ -61,8 +54,8 @@ export default {
 <style lang="scss" scoped>
 .star{
    .iconfont{
-       font-size: 36px !important;
-       margin-right: 15px;
+       font-size: 0.36rem !important;
+       margin-right: 0.15rem;
        cursor: pointer;
    }
 }

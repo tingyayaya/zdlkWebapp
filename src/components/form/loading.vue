@@ -28,17 +28,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .spinner {
-  margin: 100px auto;
-  width: 20px;
-  height: 20px;
+  margin: 1rem auto;
+  width: 0.2rem;
+  height: 0.2rem;
   position: relative;
 }
  
 .container1 > div, .container2 > div, .container3 > div {
-  width: 6px;
-  height: 6px;
+  width: 0.06rem;
+  height: 0.06rem;
   background-color: #333;
  
   border-radius: 100%;

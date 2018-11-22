@@ -1,6 +1,6 @@
 <template>
     <div class="high-chart">
-        <div id="container" style="width: 9.6rem; height: 6.4rem"></div>
+        <div id="container" style="height: 230px;"></div>
         <div class="section-h">
             <div class="part-content bg-write">
                 <div class="part contact"> 
@@ -176,26 +176,26 @@ export default {
    width: 100%;
 }
 .border-t-20{
-    border-top: 20px solid #f8f8f8;
+    border-top: 0.2rem solid #f8f8f8;
 }
 .border-b-1{
     border-bottom: 1px solid #f1f1f1;
 }
 .border-l-6{
-    border-left: 6px solid #AACB3C;
+    border-left: 0.06rem solid #AACB3C;
 }
 .section-h{
         @extend .border-t-20;
         .nav{
-            height: 30px;
-            padding: 15px 20px;
+            height: 0.3rem;
+            padding: 0.15rem 0.2rem;
             background-color:#fff;
             p{
                 height: 100%;
                 @extend .border-l-6;
-                padding-left: 22px;
-                font-size: 20px;
-                line-height: 30px;
+                padding-left: 0.22rem;
+                font-size: 0.2rem;
+                line-height: 0.3rem;
             }
         }
         .part-content{
@@ -205,31 +205,31 @@ export default {
                 flex:1;
                 justify-content: space-around;
                 text-align: center;
-                padding:20px 0;
+                padding:0.2rem 0;
                 span{
-                    font-size: 24px;
+                    font-size: 0.24rem;
                     color: #737373;
-                    line-height: 50px;
+                    line-height: 0.5rem;
                 }
                 p{
-                    font-size: 20px;
+                    font-size: 0.2rem;
                     span{
-                        font-size: 36px;
+                        font-size: 0.36rem;
                         color: #000;
                     }
                 }
                 &.contact{
                     text-align: left;
-                    padding-left: 20px;
-                    font-size: 24px;
+                    padding-left: 0.2rem;
+                    font-size: 0.24rem;
                     span{
                         color: #FFC633
                     }
                 }
                 .box{
                     border: 1px solid #dedede;
-                    width: 185px;
-                    height: 126px;
+                    width: 1.85rem;
+                    height: 1.26rem;
                     margin: 0 auto;
                 }
             }

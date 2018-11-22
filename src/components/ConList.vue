@@ -20,9 +20,9 @@ export default {
     width: 100%;
     li{
         border-bottom: 1px solid #dedede;
-        padding: 20px;
-        font-size: 28px;
-        line-height: 44px;
+        padding: 0.2rem;
+        font-size: 0.28rem;
+        line-height: 0.44rem;
         p{
            color: #888;
            .green{
@@ -30,8 +30,8 @@ export default {
            }
            .icon-contact-tel{
                color: #F9BA17;
-               font-size: 30px;
-               margin-left: 20px;
+               font-size: 0.3rem;
+               margin-left: 0.2rem;
            }
         }
     }

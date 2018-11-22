@@ -75,26 +75,26 @@ export default {
 .edit-div{
     width: 100%;
     background: #fff;
-    margin-top: 20px;
+    margin-top: 0.2rem;
     border-bottom: 1px solid #dedede;
     border-top: 1px solid #dedede;
-    font-size: 28px;
+    font-size: 0.26rem;
     li{
-        padding: 1px 0px 1px 20px;
+        padding: 1px 0px 1px 0.2rem;
         display: flex;
-        height: 68px;
+        height: 0.68rem;
         position: relative;
         input[type=tel]{
-            padding: 16px 0;
-            height: 66px;
+            padding: 0.16rem 0;
+            height: 0.66rem;
             box-sizing: border-box;
             width: 100%;
-            font-size: 28px;
+            font-size: 0.26rem;
         }
         .li-btn{
-            margin-top: 10px; 
+            margin-top: 0.1rem; 
             position: absolute;
-            right: 20px;
+            right: 0.2rem;
         }
     }
     li+li input{
@@ -102,9 +102,9 @@ export default {
     }
 }
 .errorTip{
-    padding: 10px 20px;
+    padding: 0.1rem 0.2rem;
     color: #F47340;
-    font-size: 24px;
+    font-size: 0.24rem;
 }
  
 </style>

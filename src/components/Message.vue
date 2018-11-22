@@ -1,40 +1,23 @@
 <template>
     <div class="message">
-        <router-link class="list" v-for="item in list" :to="{ name: 'msgDetailView', query: { id: item.id}}" v-if="mymsg=='msgList'" :key="item.id">
+        <router-link class="list" v-for="item in msg" :to="{ name: 'msgDetailView', query: { id: item.id}}" v-if="mymsg=='msgList'" :key="item.id">
             <p>{{item.title}}</p>
             <span>{{item.time}}</span>
         </router-link>
-        <router-link class="first" :to="{ name: 'msgDetailView', query: { id: list[0].id}}" v-if="mymsg=='msgFirst'">
-            <p>{{list[0].title}}</p>
+        <div class="first" v-if="mymsg=='msgFirst'">
+            <p>{{msg}}</p>
             <span>正大丽康温馨提示：显示最新的消息推送</span>
-        </router-link>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'message',
-    props: [ 'mymsg'],
+    props: [ 'mymsg', 'msg'],
     data(){
         return {
-            list :[
-               {
-                   title: '尊敬的****（姓名+先生、女士），您进入正大丽康营养干预已经有  天了，目前处于***阶段第n天。营养师：***，手机：****',
-                   time: '2017-02-11 15:00',
-                   id: '3'
-               },
-
-               {
-                   title: '请尽快更新您的信息，方便我们营养师给您提供健康的养生方式',
-                   time: '2017-02-11 15:00',
-                   id: '2'
-               },
-               {
-                   title: '日程提醒提醒您，请查看今日日程！',
-                   time: '2017-02-11 10:23',
-                   id: '1'
-               }
-           ]
+            
         }
     }
 }
@@ -52,39 +35,39 @@ export default {
         display: block;
         width: 100%;
         @extend .border-b;
-        padding: 20px;
+        padding: 0.2rem;
         box-sizing: border-box;
         p{
-            font-size: 30px;
-            line-height: 40px;
+            font-size: 0.3rem;
+            line-height: 0.4rem;
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
         span{
-            font-size: 24px;
+            font-size: 0.24rem;
             color: #888;
-            line-height: 44px;
+            line-height: 0.44rem;
         }
     }
     .first{
         display: block;
-        padding: 20px;
-        font-size: 24px;
+        padding: 0.2rem;
+        font-size: 0.24rem;
         p{
-            line-height: 40px;
+            line-height: 0.4rem;
         }
         span{
             color: #6b6b6b !important;
-            line-height: 100px;
+            line-height: 1rem;
         }
     }
     .btn{
          width: 100%;
          display: inline-block;
          text-align: center;
-         padding-bottom: 40px;
+         padding-bottom: 0.4rem;
     }
 }
 </style>

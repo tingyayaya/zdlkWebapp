@@ -1,8 +1,5 @@
 <template>
     <div class="isheader">
-        <my-header :title="title" :left="true">
-            <span slot="save" @click="submit">完成</span>
-        </my-header>
         <ul class="edit-div">
             <li>
                 <input type="tel" v-model="data.tel"  placeholder="请输入新手机">
@@ -45,36 +42,7 @@ export default {
         }
     },
     methods: {
-        submit() {
-            console.log(this.data)
-            
-            var code = this.checkNullVal();
-            var tel = this.checkTel();
-            
-            if(!tel){
-                if(this.data.tel==''){
-                    Toast({
-                        message: '请输入手机号',
-                        position: 'center',
-                        duration: 2500
-                    });
-                }else{
-                    Toast({
-                        message: '您输入的手机号不正确',
-                        position: 'center',
-                        duration: 2500
-                    });
-                }
-            }else if(code){
-                Toast({
-                    message: '请输入验证码',
-                    position: 'center',
-                    duration: 2500
-                });
-            }else{
-                this.$emit('inputV', this.data);
-            }
-        },
+        
         getCode() {
             var tel = this.checkTel();
             if(tel && !this.timer) {
@@ -129,28 +97,28 @@ export default {
 .edit-div{
     width: 100%;
     background: #fff;
-    margin-top: 20px;
+    margin-top: 0.2rem;
     border-bottom: 1px solid #dedede;
     border-top: 1px solid #dedede;
-    font-size: 28px;
+    font-size: 0.26rem;
     li{
-        padding: 1px 0px 1px 20px;
+        padding: 1px 0rem 1px 0.2rem;
         display: flex;
-        height: 68px;
+        height: 0.68rem;
         position: relative;
         input[type=tel]{
-            padding: 16px 0;
-            height: 66px;
+            padding: 0.16rem 0;
+            height: 0.66rem;
             box-sizing: border-box;
             width: 100%;
-            font-size: 28px;
+            font-size: 0.26rem;
         }
         .li-btn{
-            margin-top: 10px; 
+            margin-top: 0.1rem; 
             position: absolute;
-            right: 20px;
-            height: 50px !important;
-            min-width: 100px;
+            right: 0.2rem;
+            height: 0.5rem !important;
+            min-width: 1rem;
         }
     }
     li+li input{
@@ -158,9 +126,9 @@ export default {
     }
 }
 .errorTip{
-    padding: 10px 20px;
+    padding: 0.1rem 0.2rem;
     color: #F47340;
-    font-size: 24px;
+    font-size: 0.24rem;
 }
  
 </style>

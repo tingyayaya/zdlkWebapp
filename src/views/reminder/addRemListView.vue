@@ -50,15 +50,35 @@ export default {
                     duration: 2500
                 });
             }else{
-                Toast({
-                    message: '添加成功，将跳转',
-                    position: 'center',
-                    duration: 1500,
-                    iconClass: 'icon-z-loading'
-                });
-                var timer = setTimeout(function(){
-                   self.$router.push({name: 'reminderView'});
-                },1500)
+              this.$store.dispatch('setChedule', self.list).then(function(data){
+                
+                if(data=='成功'){
+
+                  Toast({
+                      message: '添加成功，将跳转',
+                      position: 'center',
+                      duration: 1500,
+                      iconClass: 'icon-z-loading'
+                  });
+                  var timer = setTimeout(function(){
+                    self.$router.push({name: 'reminderView'});
+                  },1500)
+
+                }else{
+
+                  Toast({
+                      message: data,
+                      position: 'center',
+                      duration: 1500,
+                      iconClass: 'icon-z-loading'
+                  });
+                  var timer = setTimeout(function(){
+                    self.$router.push({name: 'reminderView'});
+                  },1500)
+
+                }
+              })
+                
             }
         },
         handleConfirm(){
@@ -73,30 +93,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .addrem-view{
     background: #f8f8f8;
 }
 .addrem-list{
-    padding-top: 108px;
+    padding-top: 1.08rem;
     input, div{
-       height: 64px;
+       height: 0.64rem;
        width: 100%;
-       padding: 0 20px;
+       padding: 0 0.2rem;
        box-sizing: border-box;
        border-top: 1px solid #dedede;
        border-bottom: 1px solid #dedede;
        background: #fff;
-       margin-bottom: 20px;
+       margin-bottom: 0.2rem;
     }
     input::-webkit-input-placeholder{
-        font-size: 26px;
+        font-size: 0.26rem;
         color: #888888;
     }
     div{
-        font-size: 26px;
+        font-size: 0.26rem;
         color: #888888;
-        line-height: 60px;
+        line-height: 0.6rem;
         .label{
             color: #000000;
         }

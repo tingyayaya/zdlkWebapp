@@ -54,16 +54,16 @@ export default {
     width: 100%;
 }
 .cancel{
-   width: 320px;
+   width: 3.2rem;
    float: left;
    text-align: left;
-   padding-left: 20px; 
+   padding-left: 0.2rem; 
    box-sizing: border-box;
 }
 .sure{
-    padding-right: 20px; 
+    padding-right: 0.2rem; 
     float: left;
-    width: 320px;
+    width: 3.2rem;
     text-align: right;
     box-sizing: border-box;
     color: #F47340;

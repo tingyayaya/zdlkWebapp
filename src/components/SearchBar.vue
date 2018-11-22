@@ -46,20 +46,20 @@ export default {
 .search-bar{
     background-color: #f6f6f6;
     width: 100%;
-    height: 88px;
-    padding: 15px 20px;
+    height: 0.88rem;
+    padding: 0.15rem 0.2rem;
     box-sizing: border-box;
     z-index: 999;
     position: fixed;
-    top:88px;
+    top:0.88rem;
     input[type=search] {
         width: 100%;
-        height: 58px;
-        border-radius: 4px;
+        height: 0.58rem;
+        border-radius: 0.04rem;
         border: 0;
         text-align: center;
         -webkit-appearance: none;
-        font-size: 26px;
+        font-size: 0.26rem;
     }
     input[type=search]::-webkit-search-cancel-button{
         -webkit-appearance: none;//此处只是去掉默认的小×
@@ -70,14 +70,14 @@ export default {
     .icon-search{
         position: absolute;
         left:32%;
-        top: 32px;
+        top: 0.32rem;
         color:#b6b6b6;
-        font-size: 28px;
+        font-size: 0.28rem;
     }
     .el-icon-error{
         position: absolute;
-        right: 40px;
-        top: 32px;
+        right: 0.4rem;
+        top: 0.32rem;
         color:#b6b6b6;
     }
 }

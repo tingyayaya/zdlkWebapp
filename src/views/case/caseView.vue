@@ -5,8 +5,8 @@
                  <i class="icon-z icon-z-arrow-left"></i>
             </router-link>
         </my-header>
-        <my-nav :list="list" @tabchange = "listChild ($event)"></my-nav>
-        <my-list :list="data" :listLeftPic="true" listLeftPicLink = "caseDeView" class="isnav"></my-list>
+        <my-nav :list="navlist" @tabchange = "listChild ($event)"></my-nav>
+        <my-list :list="list"  :listLeftPic="true" listLeftPicLink = "caseDeView" class="isnav"></my-list>
     </div>
 </template>
 
@@ -20,26 +20,31 @@ export default {
     data() {
         return {
             title: '成功案例',
+            isEmpty: false,
             flag: false,
-            list: [ {name: '产后肥胖'}, {name: '高血糖'}, { name: '单纯性肥胖'},{ name: '高血压'},{ name: '高尿酸'}],
-            data: [
-                {
-                    img: 'http://img.hb.aicdn.com/b87734aa50aceca53cc1cee9d145eb394054183960e23-HVnzLX_fw658',
-                    title: '案例二',
-                    id: '123'
-                },
-                {
-                    img: 'http://img.hb.aicdn.com/1ec89f7633150fb0e9c28b0a40c956b60a65f54526a34-Eqaxel_fw658',
-                    title: '案例一',
-                    id: '123'
-                }
-            ]
+            navlist: [],
+            list: []
+               
         }
     },
-    methods: {
-        listChild(e) {
-            //console.log(e)
+    created(){
+      var self = this;
+      this.$store.dispatch('getCaseSorts').then(function(){
+        self.navlist = self.$store.getters.getCaseSorts;
+        if(self.navlist.length){
+          self.$store.dispatch('getArticle', {'lx':'成功案例', 'fl': self.navlist[0].name}).then(function(){
+            self.list = self.$store.getters.getArticle
+          })
         }
+      })
+    },
+    methods: {
+      listChild(e) {
+        var self = this;
+        self.$store.dispatch('getArticle', {'lx':'成功案例', 'fl': e.name}).then(function(){
+          self.list = self.$store.getters.getArticle
+        })
+      }
     }
 }
 </script>

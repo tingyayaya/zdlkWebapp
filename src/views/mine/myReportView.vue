@@ -1,22 +1,29 @@
 <template>
     <div class="my-report">
-        <my-header :left="true" :title="title">
+        <my-header :left="false" :title="title">
+            <i class="icon-z icon-z-arrow-left"  @click="goback" slot="otherleft"></i>
             <div slot="upload" class="filebox">
-                <a>上传</a>
-                <input type="file"  @change="update" accept="image/png,image/jpg" class="imgfile">
+                <router-link :to="{name: 'uploadReportView'}">
+                上传
+                </router-link>
+                <!-- <input type="file"  @change="update" accept="image/png,image/jpg" class="imgfile"> -->
             </div>
         </my-header>
-        <div class="mypic" v-show="!isShow">
-            <div v-for="item in imgList" class="mypicbox">
-                <div  :style="{backgroundImage: 'url('+ item.url +')'}" @click="viewImg(item.url)" class="mypic0">
-                    <!-- <img :src="item" alt="" @click="viewImg(item)" > -->
-                </div>
-                <span>{{item.time}}</span>
+        <div class="mypic" v-if="imgList.length">
+            <div v-for="item in imgList">
+              <div  class="mypicbox" v-for="imgs in item.imgs">
+                  <div  :style="{backgroundImage: 'url('+ imgs +')'}" @click="viewImg(imgs)" class="mypic0">
+                      <!-- <img :src="item" alt="" @click="viewImg(item)" > -->
+                  </div>
+                  <span>{{item.title}}</span>
+              </div>
             </div>
+            
         </div>
-        <div class="view-img isheader" v-show="isShow">
+        <no-data message="您还没有图片，请上传" v-if="!imgList.length"></no-data>
+        <div class="view-img isheader" v-show="isShow"  @click="smallImg(viewPic)">
             <div>
-                 <img :src="viewPic" @click="smallImg(viewPic)">
+                 <img :src="viewPic">
             </div>
         </div>
     </div>
@@ -24,6 +31,7 @@
 
 <script>
 import MyHeader from '@/components/MyHeader'
+import NoData from '@/components/NoData'
 
 export default {
      data() {
@@ -33,23 +41,20 @@ export default {
              viewPic: '',
              isShow: false,
              imgList2:[],
-             imgList: [
-                 {
-                     url: 'http://img.hb.aicdn.com/53f61d3c8b4f99d60f07ed1803d3cbb3f83f1ccb12294-6AOUmx_fw658',
-                     time: '2017-03-05'
-                 },
-                 {
-                     url:  'http://img.hb.aicdn.com/c13b28233bc4262186ac93f35021ea09860500421316f8-Nf63qu_fw658',
-                     time: '2017-03-02'
-                 },
-                 {
-                     url: 'http://img.hb.aicdn.com/60deda11903d77f9f94513ebc1e992507ec0683738c48-TmYSrJ_fw658',
-                     time: '2018-06-01'
-                 }
-             ]
          }
      },
+     computed:{
+       imgList() {
+         return this.$store.getters.getAmongPhoto
+       }
+     },
+     created(){
+      this.$store.dispatch('getAmongPhoto')
+     },
      methods:{
+       goback(){
+          this.$router.push({name: 'mineView'})
+       },
          viewImg(pic) {
              if(pic){
                  var height = document.body.clientWidth;
@@ -92,34 +97,28 @@ export default {
             return year+ '-' + month + "-" + day;
         }
      },
-     computed: {
-        
-     },
-     created(){
-        
-     },
-     components: { MyHeader }
+     components: { MyHeader, NoData }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .my-report{
     height: 100%;
 }
 .filebox{
     position: relative;
-    width: 80px;
-    height: 60px;
+    width: 0.8rem;
+    height: 0.6rem;
     a{  
         display: inline-block;
-        width: 80px;
-        height: 60px;
+        width: 0.8rem;
+        height: 0.6rem;
         top: 0;
         left: 0;
         position: absolute;
         z-index: 92;
         text-align: center;
-        line-height: 60px;
+        line-height: 0.6rem;
     }
     .imgfile{
         position: absolute;
@@ -127,8 +126,8 @@ export default {
         left: 0;
         filter: alpha(opacity=0);
         opacity: 0;
-        width: 80px;
-        height: 60px;
+        width: 0.8rem;
+        height: 0.6rem;
         z-index: 99;
     }
 }
@@ -137,16 +136,16 @@ export default {
        display: flex;
        flex-wrap: wrap;
        justify-content: space-between;
-       padding:  108px 25px 25px;
+       padding:  1.08rem 0.25rem 0.25rem;
        .mypicbox{
-           margin-bottom: 25px;
+           margin-bottom: 0.25rem;
            text-align: center;
-           font-size: 26px;
+           font-size: 0.26rem;
            color:#888;
-           line-height: 60px;
+           line-height: 0.6rem;
            .mypic0{
-                width: 280px;
-                height: 280px;
+                width: 2.8rem;
+                height: 2.8rem;
                 border: 1px solid #dedede;
                 //overflow: hidden;
                 background-position: center center;
@@ -176,9 +175,11 @@ export default {
        height: 100%;
        background: #fff;
        overflow: hidden;
-       padding:  108px 25px 25px;
+       padding:  1.08rem 0.25rem 0.25rem;
        box-sizing: border-box;
        text-align: center;
+       position: absolute;
+       top: 0;
        div{ 
             width: 100%;
             height: 100%;

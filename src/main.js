@@ -3,16 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/index'
 import MintUI from 'mint-ui'
 import vueEventCalendar from 'vue-event-calendar'
 import axios from 'axios'
+import baseurl from './assets/js/baseUrl'
+import errorcode from './assets/js/errorCode'
 
+import 'babel-polyfill'
 import 'vue-event-calendar/dist/style.css'
 import 'mint-ui/lib/style.css'
-import 'lib-flexible/flexible'
+// import 'lib-flexible/flexible'
+
 import './assets/css/reset.css'
 import './assets/css/iconfont.css'
-
+import './assets/js/fontsize'
 
 Vue.use(MintUI)
 //日历
@@ -20,17 +25,17 @@ Vue.use(vueEventCalendar, {locale: 'zh',color: '#AACB3C',className: 'selected-da
 
 Vue.config.productionTip = false
 
-//保存token变量
-Vue.prototype.MYTOKEN = '1EDZHKNARZ4M';
 
 //设置baseURL
-axios.defaults.baseURL = 'http://hz.chenksoft.com:8080/ckapi/api/156';
 Vue.prototype.$axios = axios;
+Vue.prototype.baseurl = baseurl;
+Vue.prototype.errorcode = errorcode;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

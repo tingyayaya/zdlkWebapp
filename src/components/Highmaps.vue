@@ -75,9 +75,9 @@ export default {
 
 <style lang="scss" scoped>
 #container{
-    width: 600px;
-    padding: 20px;
-    height: 500px;
+    width: 6rem;
+    padding: 0.2rem;
+    height: 5rem;
     z-index: 99;
 }
 </style>

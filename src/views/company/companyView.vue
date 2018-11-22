@@ -17,9 +17,10 @@ export default {
     components: { MyNav, MyHeader},
     data() {
         return {
-            title: '健康知识',
+            title: '公司简介',
             flag: false,
-            list: [ {name: '公司新闻', router: 'newsView'}, {name: '关于我们',router: 'aboutusView'}, { name: '分支机构', router: 'branchView'}, { name: '促销活动', router: 'salesView'} ]
+            // { name: '分支机构', router: 'branchView'}
+            list: [ {name: '公司新闻', router: 'newsView'}, {name: '关于我们',router: 'aboutusView'}, { name: '促销活动', router: 'salesView'} ]
         }
     }
 }

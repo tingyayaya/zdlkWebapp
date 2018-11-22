@@ -6,37 +6,21 @@
                 <span>kg</span>
                 <input type="number" placeholder="请输入体重" class="input-text" v-model="form.weight">
             </div>
-            <div class="select" @click="openPicker"><span v-show="!form.date">请选择日期</span><span>{{form.date}}</span></div>
-            <!-- <textarea name="" id="" placeholder="晒饮食，晒心情"></textarea> -->
-            <div class="picker-pic">
-                <div class="pic-box" :style="{backgroundImage: 'url('+item+')'}" v-for="(item,index) in form.imgs" >
-                    <div class="delete" @click="delete2(index)"><i class="icon-z icon-z-arrow-delete"></i></div>
-                </div>
-                <div class="add-box" v-show="dispearla">
-                    <input type="file" @change="getImages" class="files" ref="feedbakcImg">
-                    <i class="icon iconfont icon-add-img"></i>
-                </div>
-            </div>
+            <div class="select" @click="pickdate"><span v-show="!currentTages">请选择时间</span><span>{{currentTages.name}}</span></div>
+            <picker-pic @getpick="getpick"></picker-pic>
             <mt-button type="primary"  class="bottom-btn2 middle-large" @click="submitForm">确认</mt-button>
         </div>
-         <mt-datetime-picker
-        ref="picker"
-        type="date"
-        year-format="{value} 年"
-      month-format="{value} 月"
-      date-format="{value} 日"
-        v-model="pickerValue"
-        :startDate="startDate"
-        :endDate="endDate"
-        @confirm="handleConfirm">
-    </mt-datetime-picker>
-        
+        <mt-popup v-model="popupVisible" position="bottom" class="mint-popup" >
+          <picker-day @selectValue="getSelectValue($event)"></picker-day>
+        </mt-popup>
     </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader'
-
+import PickerPic from '@/components/PickerPic'
+import MyPicker from '@/components/MyPicker'
+import PickerDay from '@/components/PickerDay'
 import { Toast } from 'mint-ui';
 
 export default {
@@ -46,28 +30,10 @@ export default {
             endDate: new Date('2032-12-31'),
             pickerValue: '2012-01-01',
             isDelete: false,
-            dispearla: true,
             title: '记录体重',
             currentTages: '',
             defaultShow:true, 
             popupVisible: false,
-            slots44: [{
-                flex: 1,
-                values: [
-                    {
-                        id:'1',
-                        name: '早餐'
-                    },{
-                        id:'2',
-                        name: '午餐'
-                    },{
-                        id:'3',
-                        name: '晚餐'
-                    }
-                ],
-                className: 'slot1',
-                textAlign: 'center'
-            }],
             form:{
                 imgs: [],
                 weight: '',
@@ -75,58 +41,117 @@ export default {
             }
         }
     },
+    created(){
+      //this.datetime();
+    },
     methods: {
+        pickdate(){
+          this.popupVisible = true;
+        },
+        getpick (data){
+          this.form.imgs = data;
+        },
+        getData() {
+          var self = this;
+          var time = this.daytime();
+          this.$axios({
+            method: 'get',
+            url: self.baseurl.viewer+'/Weight_Record.jsp',
+            params: {
+              'skt138.skf2265': self.form.weight,
+              'skt138.skf2264': self.form.date,
+              'skt138.skf2267': self.form.imgs,
+              'skt138.skf2262': JSON.parse(localStorage.getItem('userInfoState')).userInfoState.vipID,
+              'skt138.skf2263': 1,
+              'skt138.sf_create_time': time
+            }
+          })
+          .then(function(res){
+            if(res.data.code!=0){
+              Toast({
+                  message: '记录失败，请重试',
+                  position: 'center',
+                  duration: 1000
+              });
+              
+              var timer = setTimeout(function(){
+                  self.$router.push({name: 'recordView'})
+              },1000)
+            }else{
+              Toast({
+                  message: '记录成功',
+                  position: 'center',
+                  duration: 1000
+              });
+              var timer = setTimeout(function(){
+                 self.$router.push({name: 'recordView'})
+              },1000)
+            }
+          })
+        },
         openPicker() {
            this.$refs.picker.open(); 
         },
         handleConfirm(){ 
             this.form.date = this.DateGMT(this.pickerValue);
         },
+        formatNum(num){
+            return num.toString().replace(/^(\d)$/, "0$1");
+        },
         DateGMT(time){
+          var self = this;
             var str = new Date(time);
-            var year, month, day, currentDate;
-            year = str.getFullYear();
-            month = str.getMonth()+1;
-            day = str.getDate()
-            currentDate = year+"-";
-            
-            if(month>=10){
-                currentDate+= month+"-";
-            }else{
-                currentDate+= "0"+month+"-";
-            }
-            
-            if(day>=10){
-                currentDate += day
-            }else{
-                currentDate+= "0"+day;
-            }
-            return currentDate;
+            return str.getFullYear() + '-' + this.formatNum(str.getMonth() + 1) + '-' + this.formatNum(str.getDate())
+        },
+        // 年月日时分秒
+        daytime(){
+          var date = new Date();
+          return date.getFullYear() + '-' + this.formatNum(date.getMonth() + 1) + '-' + this.formatNum(date.getDate())+
+          ' '+ this.formatNum(date.getHours())+':'+this.formatNum(date.getMinutes())+':'+this.formatNum(date.getSeconds());
         },
         getSelectValue(e){
             if(e[1]!=null){
                 this.currentTages = e[1];
+                this.form.date = e[1].id;
+                console.log(this.form.date)
             }
             this.popupVisible = e[0];
         },
         getImages(e){
             var self = this;
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            this.$refs.feedbakcImg.value ='';
-            reader.readAsDataURL(file);
-            reader.onload = function(){
-                var base64 = reader.result;
-                self.form.imgs.push(base64);
-                if(self.form.imgs.length>=8){
-                    self.dispearla = false;
+            var oFiles = e.target.files;
+            var formData = new FormData();
+            
+
+            formData.append("domainid","156");
+            for(var i=0;i<oFiles.length;i++){
+              
+              formData.append(oFiles[i].name, oFiles[i]);
+            }
+           
+            if(oFiles.length !=0){
+              self.$axios({
+                method: 'post',
+                url: self.baseurl.imgsurl,
+                headers: { 'Content-Type': 'multipart/form-data' },
+                data: formData
+              })
+              .then(function(res){
+                //console.log(res)
+                if(res.data.code==0&&res.data.msg=='成功'){
+                  var arr = res.data.data.split(';');
+                  for(var i=0; i<arr.length-1; i++){
+                    self.form.imgs.push(self.baseurl.imgdownloadurl+arr[i]+'&filename='+arr[i]);
+                  }
                 }
+                self.$refs.feedbakcImg.value ='';
+              })
             }
         },
         delete2(num){
             this.form.imgs.splice(num, 1);
         },
-        validateimg(){
+        validateWeight(){
             if(this.form.weight==0){
                 Toast({
                     message: '请输入体重',
@@ -145,117 +170,75 @@ export default {
                     position: 'center',
                     duration: 2500
                 });
+                return false;
+           }else{
+             return true;
            }
         },
         submitForm(){
-            this.validateimg();
-            this.validateDate();
+          if(this.validateWeight()&&this.validateDate()){
+            this.getData();
+          }
         }
     },
-    components: { MyHeader }
+    components: { MyHeader, PickerPic, MyPicker, PickerDay}
 }
 </script>
 
 <style lang="scss" scoped>
 
 $border1: 1px solid #dedede;
-
+.mint-popup{
+    width: 100%;
+}
 .all-record-view{
     height: 100%;
     .content{
         height: 100%;
         box-sizing: border-box;
-        padding: 108px 20px 20px 20px;
+        padding: 1.08rem 0.2rem 0.2rem 0.2rem;
         position: relative;
         .input-danwei{
             position: relative;
+            margin-bottom: 0.2rem;
             span{
                 position: absolute;
-                right: 20px;
-                top: 10px;
+                top: 50%;
+                right: 0.2rem;
+                transform: translateY(-50%);
+                font-size: 0.24rem;
             }
         }
         .input-text{
             width: 100%;
-            height: 68px;
+            height: 0.68rem;
             border: $border1;
-            padding: 20px;
+            padding: 0.1rem 0.2rem;
             box-sizing: border-box;
-            margin-bottom: 20px;
+            font-size: 0.28rem;
         }
         .select{
             width: 100%;
-            height: 68px;
+            height: 0.68rem;
             border: 1px solid #dedede;
-            line-height: 68px;
-            padding: 0 20px;
+            line-height: 0.68rem;
+            padding: 0 0.2rem;
             box-sizing: border-box;
-            border-radius: 2px;
-            margin-bottom: 20px;
+            border-radius: 0.02rem;
+            margin-bottom: 0.2rem;
         }
         textarea{
             width: 100%;
-            height: 260px;
-            padding: 20px;
+            height: 2.6rem;
+            padding: 0.2rem;
             border: 1px solid #dedede;
-            border-radius: 2px;
+            border-radius: 0.02rem;
             box-sizing: border-box;
         }
-        .picker-pic{
-            padding:20px 0;
-            width: 100%;
-            display: flex;
-            flex-flow: row wrap;
-            .pic-box{
-                background-position: center center;
-                background-size: cover;
-                background-repeat: no-repeat;
-                border: $border1;
-                width: 134px;
-                height: 134px;
-                margin-bottom: 20px;
-                margin-right: 16px;
-                position: relative;
-                .delete{
-                    position: absolute;
-                    top: 1px;
-                    right: 1px;
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-            .pic-box:nth-child(4),.pic-box:nth-child(8){
-                margin-right: 0;
-            }
-            .add-box{
-                width: 134px;
-                height: 134px;
-                border: 1px solid #dedede;
-                position: relative;
-                .icon-add-img{
-                    z-index: 2;
-                    color: #D8D8D8;
-                    font-size: 80px;
-                    position: absolute;
-                    top:50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-                .files{
-                    z-index: 3;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    opacity: 0;
-                    filter: alpha(opacity=0);
-                    width: 134px;
-                    height: 134px;
-                }
-            }
-        }
+        
     }
     .formBox{
-        font-size: 30px;
+        font-size: 0.28rem;
     }
 }
 

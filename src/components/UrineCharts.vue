@@ -1,22 +1,20 @@
 <template>
     <div class="high-chart">
-        <div id="container" style="width: 9.6rem; height: 6.4rem">
-
-        </div>
+        <div id="container" style="height: 230px"></div>
         <div class="section-h">
             <div class="part-content bg-write">
                 <div class="part contact"> 
                     <p>日期：</p>
-                    <span id="date">--</span>
+                    <span>{{selectDate}}</span>
                 </div>
                 <div class="part contact"> 
-                    <p>尿酮值：</p>
-                    <span id="values">--</span>
+                    <p>当前值：</p>
+                    <span>{{selectValues}}</span>
                 </div>
-                <div class="part contact"> 
+                <!-- <div class="part contact"> 
                     <p>与初始值差值：</p>
                     <span id="dif">--</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -24,6 +22,7 @@
 
 <script>
 import HighCharts from 'highcharts'
+import { relative } from 'path';
 // import options from '../chart-options/options'
 
 export default {
@@ -31,51 +30,14 @@ export default {
     data() {
         return {
             point: '',
-            timex: [
-                {
-                    time: '2016-09-20 00:00:00',
-                    value: '1+'
-                },
-                {
-                    time: '2016-09-21 00:00:00',
-                    value: '2+'
-                },
-                {
-                    time: '2016-09-23 08:52:40',
-                    value: '1+'
-                },
-                {
-                    time: '2016-09-24 15:52:40',
-                    value: '4+'
-                },
-                {
-                    time: '2016-09-26 16:52:40',
-                    value: '0'
-                },
-                {
-                    time: '2016-09-27 12:52:40',
-                    value: '3+'
-                },
-                {
-                    time: '2016-09-28 11:52:40',
-                    value: '4+'
-                },
-                {
-                    time: '2016-09-30 15:52:40',
-                    value: '0'
-                },
-                {
-                    time: '2016-10-1 15:52:40',
-                    value: '1+'
-                }
-                
-            ],
+            selectDate: '--',
+            selectValues: '--',
             option:{
                 chart: {
                     type: 'spline'  //曲线图
                 },
                 title: {
-                    text: '尿酮曲线变化',
+                    text: '',
                     style: {"color": "#333333", "fontSize": "12px"}
                     
                 },
@@ -83,12 +45,9 @@ export default {
                     enabled: false
                 },
                 xAxis: {
-                    type: 'datetime',
+                    type: 'category',
                     title: {
-                            text: null
-                    },
-                    dateTimeLabelFormats: {
-                        day: '%m-%d',
+                      text: null
                     }
                 },
                 yAxis: {
@@ -100,15 +59,15 @@ export default {
                     //tickAmount: 5,
                     gridLineColor: '#f8f8f8',
                     labels: {
-						formatter: function () {
-                                if(this.value>0){
-                                    return this.value + '+';
-                                }else{
-                                    return this.value
-                                }
-						}
+                      formatter: function () {
+                          if(this.value>0){
+                              return this.value + '+';
+                          }else{
+                              return this.value
+                          }
+                      }
                     },
-                    tickPositions: [0, 1, 2, 3, 4]
+                    // tickPositions: [0, 1, 2, 3, 4]
                 },
                 tooltip: {    //鼠标移动到数据点时提示框
                     enabled: false,
@@ -116,9 +75,15 @@ export default {
                 plotOptions: {
                     spline: {
                         marker: {
-                                enabled: true
+                          enabled: true
                         }
-                   }   
+                    },
+                    series: {
+                      cursor: 'pointer',
+                      events:{
+
+                      }
+                    }   
                 },
                 credits:{
                     enabled: false // 禁用版权信息
@@ -128,81 +93,86 @@ export default {
                     color: '#5B873C',
                     cursor: 'pointer',
                     initVal: '3.9',
-                    events:{
-                        click: function(e){
-                            Date.prototype.toLocaleString = function() {
-                                return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate()
-                            };
-                            var date = new Date(e.point.options.x);
-                            var commonTime = date.toLocaleString();
-                            document.getElementById('date').innerHTML = commonTime;
-                            document.getElementById('values').innerHTML=e.point.options.y+'+';
-                            var dif = e.point.options.y - sessionStorage.initVal;
-                           
-                            document.getElementById('dif').innerHTML=dif.toFixed(1);
-                            
-                        }
-                    },
                     data:[]
                 }]
             }
         }
     },
+    props: ['dataList', 'chartTitle'],
+    watch:{
+      dataList(curVal, oldVal){
+        var arr = curVal;
+        this.chart.series[0].setData(arr);
+      }
+    },
     mounted() {
-        var len = this.timex.length;
-        var arr = []; 
-        for(var i=0; i<len; i++){
-            //console.log(this.timex[i].value);
-            var reg = /^(\d+)-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/;
-            if(reg.test(this.timex[i].time)){
-                var arr2 = [];
-                arr2[0] = this.changeDate(this.timex[i].time);
-                arr2[1] = parseInt(this.timex[i].value);
-                this.option.series[0].data.push(arr2);
-            }
-        }
-
-        sessionStorage.initVal = '1';
-        HighCharts.setOptions({
-            global: { useUTC: true }
-        })
-        var charts = HighCharts.chart('container', this.option)
+      var self = this;
+      this.option.series[0].data = this.dataList;
+      this.option.title.text = this.chartTitle;
+      this.option.plotOptions.series.events.click=function(e){
+        self.selectDate = e.point.options.name;
+        self.selectValues = e.point.options.y+'+';
+        self.$emit('selectDate', self.selectDate)
+      } 
+      HighCharts.setOptions({
+          global: { useUTC: true },
+          lang: {
+            noData: '暂无数据'
+          }
+      })
+      this.chart = HighCharts.chart('container', this.option)
     },
     methods: {
-       changeDate(time){
-           var timeP = time.split(' ');
-           //console.log(timeP[0]);
-           return Date.parse(timeP[0]);
+       formatNum(num) {
+        return num.toString().replace(/^(\d)$/, "0$1")    
+       },
+       localString(date){
+          return date.getFullYear() + '-' + this.formatNum(date.getMonth() + 1) + '-' + this.formatNum(date.getDate());
+       },
+       controlDate(dada){
+          var len = dada.length;
+          var arr = []; 
+          for(var i=0; i<len; i++){
+            var reg = /^(\d+)-(\d{2})-(\d{2})$/;
+            if(reg.test(dada[i].time)){
+                var arr2 = [];
+                arr2[0] = Date.parse(dada[i].time);
+                arr2[1] = dada[i].value;
+                arr.push(arr2);
+            }
+          }
+          return arr;
        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .high-chart{
    width: 100%;
 }
 .border-t-20{
-    border-top: 20px solid #f8f8f8;
+    border-top: 0.2rem solid #f8f8f8;
 }
 .border-b-1{
     border-bottom: 1px solid #f1f1f1;
 }
 .border-l-6{
-    border-left: 6px solid #AACB3C;
+    border-left: 0.06rem solid #AACB3C;
 }
 .section-h{
         @extend .border-t-20;
         .nav{
-            height: 30px;
-            padding: 15px 20px;
+            height: 0.3rem;
+            padding: 0.15rem 0.2rem;
             background-color:#fff;
             p{
                 height: 100%;
                 @extend .border-l-6;
-                padding-left: 22px;
-                font-size: 20px;
-                line-height: 30px;
+                padding-left: 0.22rem;
+                font-size: 0.2rem;
+                line-height: 0.3rem;
             }
         }
         .part-content{
@@ -214,29 +184,29 @@ export default {
                 text-align: center;
                 padding:20px 0;
                 span{
-                    font-size: 24px;
+                    font-size: 0.24rem;
                     color: #737373;
-                    line-height: 50px;
+                    line-height: 0.5rem;
                 }
                 p{
-                    font-size: 20px;
+                    font-size: 0.2rem;
                     span{
-                        font-size: 36px;
+                        font-size: 0.36rem;
                         color: #000;
                     }
                 }
                 &.contact{
                     text-align: left;
-                    padding-left: 20px;
-                    font-size: 24px;
+                    padding-left: 0.2rem;
+                    font-size: 0.24rem;
                     span{
                         color: #FFC633
                     }
                 }
                 .box{
                     border: 1px solid #dedede;
-                    width: 185px;
-                    height: 126px;
+                    width: 1.85rem;
+                    height: 1.26rem;
                     margin: 0 auto;
                 }
             }

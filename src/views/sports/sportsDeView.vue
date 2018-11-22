@@ -3,8 +3,17 @@
         <my-header :title="title" :left="flag" >
             <i class="icon-z " :class="star ? 'icon-z-star':'icon-z-unstar'" slot="stars"  @click="starToggle"></i>
         </my-header>
-        <div>
-           <detail-list :list="list" :type1="true"></detail-list>
+        <div class="my-acticle isheader">
+            <div class="title">
+                <p>{{list.title}}</p>
+                <i class="icon iconfont icon-icon-time"></i>
+                <span>{{list.time}}</span>
+                <i class="icon iconfont icon-icon-stars"></i>
+                <span>{{list.num}}</span>
+            </div>
+            <div class="content" v-html="list.content">
+                {{list.content}}
+            </div>
         </div>
     </div>
 </template>
@@ -18,29 +27,37 @@ export default {
     data() {
         return {
             title: '运动加油站',
+            articalId: '',
             flag: true,
-            star: true,
-            list: {
-                title : '正大集团谢国民资深董事长出席博鳌亚洲论坛2018年年会',
-                time : '2017-05-03',
-                num: '342',
-                content : '4月10日，以“开放创新的亚洲•繁荣发展的世界”为主题的博鳌亚洲论坛2018年年会开幕式在海南博鳌举行。中国国家主席习近平出席年会开幕式并发表重要主旨演讲。中国侨商投资企业协会会长、泰国正大集团资深董事长谢国民参加年会开幕式，并在9日下午举行的博鳌亚洲论坛“华商领袖与华人智库圆桌会议”上作重要发言'
-            }
+            star: false,
+            list: ''
         }
+    },
+    computed:{
+      list() {
+        return this.$store.getters.getArticleDetail
+      }
+    },
+    created() {
+      var self = this;
+      var id = this.$route.query.id;
+      this.$store.dispatch('getArticleDetail', id)
     },
     methods: {
         starToggle() {
-            this.star = ! this.star;
-            if(this.star){
-               Toast({
-                   message: '收藏成功',
-                   duration: 2500
+            var self = this;
+           
+            if(!this.star){
+               this.$store.dispatch('toCollect', {'lx':this.title, 'id': this.articalId }).then(function(){
+                 if(self.$store.getters.toCollect){
+                    self.star = ! self.star;
+                    Toast({
+                      message: '收藏'+self.$store.getters.toCollect,
+                      duration: 2500
+                    });
+                 }
                });
-            }else{
-                Toast({
-                   message: '取消收藏',
-                   duration: 2500
-               });
+               
             }
         }
     },
@@ -49,6 +66,26 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+.my-acticle{
+    padding: 1.08rem 0.2rem 0.2rem 0.2rem;
+    .content{
+       text-align: justify;
+       font-size: 0.28rem;
+    }
+    .title{
+        margin-bottom: 0.4rem;
+        p{
+            font-size: 0.36rem;
+            margin-bottom: 0.2rem;
+        }
+        i, span{
+            color: #888;
+            font-size: 0.24rem;
+        }
+        .icon-icon-stars{
+            margin-left: 0.2rem;
+        }
+    }
+}
 </style>

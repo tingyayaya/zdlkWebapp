@@ -64,34 +64,34 @@ export default {
     background: #f8f8f8;
     height: 100%;
     ul{ 
-        padding-top: 5px;
-        font-size: 28px;
+        padding-top: 0.05rem;
+        font-size: 0.28rem;
         li{
-            padding-left: 20px;
+            padding-left: 0.2rem;
             box-sizing: border-box;
             border-bottom: 1px solid #dedede;
             border-top: 1px solid #dedede;
-            margin-top: 20px;
+            margin-top: 0.2rem;
             background-color:#fff;
             a+a{
                     border-top: 1px solid #dedede;
             }
             i{
-                margin-right: 10px;
-                font-size: 30px;
+                margin-right: 0.1rem;
+                font-size: 0.3rem;
             }
             a{
                 width: 100%;
                 height: 100%;
                 display: inline-block;
-                line-height: 76px;
+                line-height: 0.76rem;
                 position: relative;
             }
             .icon-company{
                 color: #AACB3C;
             }
             .icon-knowledge{
-                font-size: 26px;
+                font-size: 0.26rem;
                 color: #3CC0CB;
             }
             .icon-sports{
@@ -108,9 +108,9 @@ export default {
             }
             .icon-list-right{
                 color: #b3b3b3;
-                font-size: 26px;
+                font-size: 0.26rem;
                 position: absolute;
-                right: 20px;
+                right: 0.2rem;
             }
         }
     }
